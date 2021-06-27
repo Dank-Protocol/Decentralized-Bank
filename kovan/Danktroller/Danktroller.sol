@@ -1422,6 +1422,6 @@ contract Danktroller is DanktrollerV4Storage, DanktrollerInterface, DanktrollerE
      * @return The address of DANK
      */
     function getDankAddress() public view returns (address) {
-        return 0x23B92506efed32fD51F216127B525B7eeb629Fa2;
+        return 0xfA87B609Efd2060e3A50Ba78F8a0D0556af0ea51;
     }
 }
