@@ -1,0 +1,307 @@
+{
+	"compiler": {
+		"version": "0.5.16+commit.9c3226ce"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"constant": true,
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "borrowCaps",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": false,
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "claimComp",
+				"outputs": [],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "compAccrued",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "compSpeeds",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "getAccountLiquidity",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "getAssetsIn",
+				"outputs": [
+					{
+						"internalType": "contract CToken[]",
+						"name": "",
+						"type": "address[]"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "markets",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					},
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [],
+				"name": "oracle",
+				"outputs": [
+					{
+						"internalType": "contract PriceOracle",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"methods": {}
+		},
+		"userdoc": {
+			"methods": {}
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"kovan/CompoundLens/CompoundLens.sol": "ComptrollerLensInterface"
+		},
+		"evmVersion": "istanbul",
+		"libraries": {},
+		"optimizer": {
+			"enabled": true,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"kovan/CErc20.sol": {
+			"keccak256": "0x2010e5c5832aeb41c5a9090e1e63806b091ffc190e232b72353c991859db4eb4",
+			"urls": [
+				"bzz-raw://51ce8bdbd99327df0da8e80ec121a91250d6ef008c2e8489f8a20c88273a5f6e",
+				"dweb:/ipfs/QmfDLmAKG9iQFxm21xAKdb4rrsReMdz54kx5mbvqL6Jhmv"
+			]
+		},
+		"kovan/CToken.sol": {
+			"keccak256": "0x65c18515a257db63fcb7ee47b106aaf9b257872fe2b8b9a60d1885a835edc609",
+			"urls": [
+				"bzz-raw://207c4b8cca29804a33d8428ee44506b6d41b39997c14d972e1afc3f142fca61e",
+				"dweb:/ipfs/Qma3Sv2CeYVe1Zut16NSpCiLG2eq8cVHMXG1tRGtD7pDsz"
+			]
+		},
+		"kovan/CTokenInterfaces.sol": {
+			"keccak256": "0x3b1e3690a31a1e4779974eb43ce1e7d5a1173d1e755ba6bc22e90b244a33acb9",
+			"urls": [
+				"bzz-raw://783826b972cc7d8b7959d6204919d26b23e6887a568bbaa4adc01caec5a3ecab",
+				"dweb:/ipfs/QmegzTMomhW8wGpJsUBCLwfEmhEDS7KAXZD6eRVtKxUqQX"
+			]
+		},
+		"kovan/CarefulMath.sol": {
+			"keccak256": "0x57d6930a0f3d3c17cc2685161c1e71d972c6045807bbd6e657e53aa3b4609408",
+			"urls": [
+				"bzz-raw://7c0abdf53adebc5b67d9f6bf4f1ade10a27a56e31ed73ec784b28af1d6c98adc",
+				"dweb:/ipfs/QmXND9GoV4UH2D48fjZ9WUVyyjUo1LrKjuR4txFNVWX4zd"
+			]
+		},
+		"kovan/CompoundLens/CompoundLens.sol": {
+			"keccak256": "0xc2f8561dc75453be410cd63ed36f65be9a90aeb28a3c8cf505975c58153f8749",
+			"urls": [
+				"bzz-raw://e785b922d9f9235e7b5cd65643c40fa70b4c93734002310110d9a483e5c8f578",
+				"dweb:/ipfs/QmWHGdXgbKnMKLLFnxK8x1NM514YECafAr9pY27q792Tfu"
+			]
+		},
+		"kovan/ComptrollerInterface.sol": {
+			"keccak256": "0xdf38109d097fff3e724bd45a4cbd2f892148162c3c96db179fcb7a1ef45b5167",
+			"urls": [
+				"bzz-raw://feb55e41b176aa76194b6bb1e8b50c9fb8e1ac53a35c7c1719c2273eba22fb45",
+				"dweb:/ipfs/QmToG3P2w1UCwK3W1KjFh4x77HouVLBa9sY5SaoyVxkMCx"
+			]
+		},
+		"kovan/EIP20Interface.sol": {
+			"keccak256": "0xd89723953595fe8d91f53737d4685a4e1e0f42576f569b1118dfb3d1c0fd5419",
+			"urls": [
+				"bzz-raw://209124060d3973a9731d343168d6ad0eaa226cc041d6e7dc95738ce1ca30f9c3",
+				"dweb:/ipfs/QmeWg82d4desJSbh9rzWZVkaJoRmD6b25MQmxbgfmYUpoq"
+			]
+		},
+		"kovan/EIP20NonStandardInterface.sol": {
+			"keccak256": "0x234c4d9d37ba68e8e327951bbf9d8176b3daaa379abc9579f63eab00523be4f2",
+			"urls": [
+				"bzz-raw://15f8d45da762d8e16244cdc698b54400f585496fde6fe30a4c7dd0bbdd9b7e6a",
+				"dweb:/ipfs/QmQF4tXrtz6fpXyTe8rc1RdZoXmyvLiDxVfE5UntnpqEoq"
+			]
+		},
+		"kovan/ErrorReporter.sol": {
+			"keccak256": "0x93e17c2249e72b34fb9ed172d00bf8ae41014669d3cd4b70a37ac4427ad6a134",
+			"urls": [
+				"bzz-raw://126775a980bf548a4b447475b05c4c5e0720920dafb2b6a18886f4bfa2016418",
+				"dweb:/ipfs/QmcHiBmeucUk9kqnZxoPbW7DZmZEWexVWhEYbTFRFmeixX"
+			]
+		},
+		"kovan/Exponential.sol": {
+			"keccak256": "0xa0b6bccdbe7b68324aed1e71173df868114fb49af46b6bd9d9489cef291c9f91",
+			"urls": [
+				"bzz-raw://43812491d6861b8982cc74acefb946582b1bc25d112e2b44782e05d3617e0927",
+				"dweb:/ipfs/QmVNidhCwxoRv1qVJSG7tZo8R5xCyStYpxXnkeUshLj98G"
+			]
+		},
+		"kovan/ExponentialNoError.sol": {
+			"keccak256": "0x6a4e16ae9aec19bdce3d20539f3f08501eb10776c76e3dc628bebecc68b531e1",
+			"urls": [
+				"bzz-raw://12180a5981b0e6e1f1ce81430554494cf1375299c3d3d37f9d32f242ab95978f",
+				"dweb:/ipfs/QmdD9hVAYA6vWUMsGt1SYvqXwQqRXke95bhBL55fjzC4av"
+			]
+		},
+		"kovan/Governance/Comp.sol": {
+			"keccak256": "0x91bb6a1b531623b7740ea10553d07f743c8390bf2e16969efa3d34a99d71da0f",
+			"urls": [
+				"bzz-raw://b0a301d69e29676889804c87848235d0938aec927acd3055485cdf6af8cfc2eb",
+				"dweb:/ipfs/QmcMvegFr7boVi27zxTjiQgEQw9vWkAsccJ1vbC3QYWKrt"
+			]
+		},
+		"kovan/Governance/GovernorAlpha.sol": {
+			"keccak256": "0xba0bc40b642f4670518840f668d76c423f1df14507f95a3c5d65b211c5df424e",
+			"urls": [
+				"bzz-raw://1077fca21741b5f1c9ac5eaeef4b2c7db23721a9212075f98f97492a26cb6d95",
+				"dweb:/ipfs/QmTaiHY3KWYxgmtVZToB21prEAbJmw57HW1ApRPpthUCCe"
+			]
+		},
+		"kovan/InterestRateModel.sol": {
+			"keccak256": "0xff9a034a512966986daf9f5d0bed6569fba44b255a557c861e847b080b201259",
+			"urls": [
+				"bzz-raw://38479eeef49b737709d4f08a49589e842031c1687feea4667f8d5ef2a2a63c0b",
+				"dweb:/ipfs/QmPtNZACXj8nJoB4xZoKsbqm3KppS1ZEAuuaMm6DgBNvey"
+			]
+		},
+		"kovan/PriceOracle.sol": {
+			"keccak256": "0x3b9d821932a73582aabdc4ad41aeb0f753ea7985f7af20062dd955781e449a53",
+			"urls": [
+				"bzz-raw://094c74c94a27ab75dd42d4033feb2d5eba9cbeb707105c3d774b70b9ec9ad422",
+				"dweb:/ipfs/QmbLEzNw6KU9R9YhraKCM4y7y8u2wXf6MqUaZaAjVhNcbQ"
+			]
+		}
+	},
+	"version": 1
+}

@@ -1,0 +1,397 @@
+{
+	"compiler": {
+		"version": "0.5.17+commit.d19bba13"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "constructor"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "error",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "info",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "detail",
+						"type": "uint256"
+					}
+				],
+				"name": "Failure",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "oldAdmin",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "newAdmin",
+						"type": "address"
+					}
+				],
+				"name": "NewAdmin",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "oldImplementation",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "newImplementation",
+						"type": "address"
+					}
+				],
+				"name": "NewImplementation",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "oldPendingAdmin",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "newPendingAdmin",
+						"type": "address"
+					}
+				],
+				"name": "NewPendingAdmin",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "oldPendingImplementation",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "newPendingImplementation",
+						"type": "address"
+					}
+				],
+				"name": "NewPendingImplementation",
+				"type": "event"
+			},
+			{
+				"payable": true,
+				"stateMutability": "payable",
+				"type": "fallback"
+			},
+			{
+				"constant": false,
+				"inputs": [],
+				"name": "_acceptAdmin",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"constant": false,
+				"inputs": [],
+				"name": "_acceptImplementation",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"constant": false,
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "newPendingAdmin",
+						"type": "address"
+					}
+				],
+				"name": "_setPendingAdmin",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"constant": false,
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "newPendingImplementation",
+						"type": "address"
+					}
+				],
+				"name": "_setPendingImplementation",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [],
+				"name": "admin",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [],
+				"name": "danktrollerImplementation",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [],
+				"name": "pendingAdmin",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [],
+				"name": "pendingDanktrollerImplementation",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"details": "Storage for the danktroller is at this address, while execution is delegated to the `danktrollerImplementation`. DTokens should reference this contract as their danktroller.",
+			"methods": {
+				"_acceptAdmin()": {
+					"details": "Admin function for pending admin to accept role and update admin",
+					"return": "uint 0=success, otherwise a failure (see ErrorReporter.sol for details)"
+				},
+				"_acceptImplementation()": {
+					"details": "Admin function for new implementation to accept it's role as implementation",
+					"return": "uint 0=success, otherwise a failure (see ErrorReporter.sol for details)"
+				},
+				"_setPendingAdmin(address)": {
+					"details": "Admin function to begin change of admin. The newPendingAdmin must call `_acceptAdmin` to finalize the transfer.",
+					"params": {
+						"newPendingAdmin": "New pending admin."
+					},
+					"return": "uint 0=success, otherwise a failure (see ErrorReporter.sol for details)"
+				}
+			},
+			"title": "DanktrollerCore"
+		},
+		"userdoc": {
+			"methods": {
+				"_acceptAdmin()": {
+					"notice": "Accepts transfer of admin rights. msg.sender must be pendingAdmin"
+				},
+				"_acceptImplementation()": {
+					"notice": "Accepts new implementation of danktroller. msg.sender must be pendingImplementation"
+				},
+				"_setPendingAdmin(address)": {
+					"notice": "Begins transfer of admin rights. The newPendingAdmin must call `_acceptAdmin` to finalize the transfer."
+				},
+				"_setPendingImplementation(address)": {
+					"notice": "* Admin Functions **"
+				}
+			}
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"Danktroller/Unitroller.sol": "Unitroller"
+		},
+		"evmVersion": "istanbul",
+		"libraries": {},
+		"optimizer": {
+			"enabled": true,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"CarefulMath.sol": {
+			"keccak256": "0x2bd26a739db38973ae3105de64ed75973769f6474434ae4902dbdf8a99e45cf2",
+			"urls": [
+				"bzz-raw://82d402cb231ac5ba205d3d99271882f36b5609880c69d12dd7bd9f62ca118bfd",
+				"dweb:/ipfs/QmUwv8qMgEGNG77cDAkYzBbBoZX6pqCKiAhTHM9UgiBcyF"
+			]
+		},
+		"DToken.sol": {
+			"keccak256": "0xaf36486fa879b4b693f79709809c456d9e637c1ea3c93c4b16c1dd62f844bfd5",
+			"urls": [
+				"bzz-raw://9d282c97508bf83099d9348a2e0fe37d36308595e66bab2df56b85fb8198d1e6",
+				"dweb:/ipfs/QmXrWky1EMVUD7VAN3THcfUtNG9RTnXBJV11SbRK51DY19"
+			]
+		},
+		"DTokenInterfaces.sol": {
+			"keccak256": "0xc10528eb603336244c8a9f27859dc631a8ad620c5f6477d94a171e6bffa6c352",
+			"urls": [
+				"bzz-raw://99d71643358dbdfed8422fbd8fab9293cbf025c64b604b668fdf980c35796dce",
+				"dweb:/ipfs/QmTU1rtQvARE6LaZKSQhVjnguARePGQadsyuQNiJwCSvQV"
+			]
+		},
+		"Danktroller/Unitroller.sol": {
+			"keccak256": "0x7bf7bcda115eb3ca797d123a44cb716ebf5dfa5f358dbb434bd3bbaf595cf202",
+			"urls": [
+				"bzz-raw://e7dc14cc2336d795ae7c3ff63b5d7fcab5afe81f29e0a5f9e44f0b4ec9f9d020",
+				"dweb:/ipfs/QmNjfAdnjzZHBqpuZswgNQtMokwa75rZPUN2hLtJrb5hjQ"
+			]
+		},
+		"DanktrollerInterface.sol": {
+			"keccak256": "0xa364c9d38317b2940abe0baa8bbd6d9b88175e679a2e95c06e0b7b5f8d13996c",
+			"urls": [
+				"bzz-raw://470dddc3128a76abc4426aed88aad84fe4090c84146886b4e08e24bca29e46e9",
+				"dweb:/ipfs/Qmei2YDz6x27HB7XWu4PuCbGcP7s7M8VPBeTBxLWKkHrhB"
+			]
+		},
+		"DanktrollerStorage.sol": {
+			"keccak256": "0x4885efbebabf7f133826aa1a680316021f9487e8d4f69be0d44b426d7f929455",
+			"urls": [
+				"bzz-raw://931a7c5e674095791d6f5641290aaa8ee3cc66d756ae8c8674daca9984075c10",
+				"dweb:/ipfs/QmedHH1gAwiB19tckrqKNnAxT3kNACwHCkB62sr7sp4F1M"
+			]
+		},
+		"EIP20Interface.sol": {
+			"keccak256": "0xd89723953595fe8d91f53737d4685a4e1e0f42576f569b1118dfb3d1c0fd5419",
+			"urls": [
+				"bzz-raw://209124060d3973a9731d343168d6ad0eaa226cc041d6e7dc95738ce1ca30f9c3",
+				"dweb:/ipfs/QmeWg82d4desJSbh9rzWZVkaJoRmD6b25MQmxbgfmYUpoq"
+			]
+		},
+		"EIP20NonStandardInterface.sol": {
+			"keccak256": "0x234c4d9d37ba68e8e327951bbf9d8176b3daaa379abc9579f63eab00523be4f2",
+			"urls": [
+				"bzz-raw://15f8d45da762d8e16244cdc698b54400f585496fde6fe30a4c7dd0bbdd9b7e6a",
+				"dweb:/ipfs/QmQF4tXrtz6fpXyTe8rc1RdZoXmyvLiDxVfE5UntnpqEoq"
+			]
+		},
+		"ErrorReporter.sol": {
+			"keccak256": "0x695c2f7db5f48c2e1b31303211ad4e955f8b18aea2286ea1fcd2e7bdc3f98472",
+			"urls": [
+				"bzz-raw://12d2895d405d6197852bc53fc01231b9321931a123e26c1002d65f5eb981214a",
+				"dweb:/ipfs/QmcyFq1wJsZLUdeKXGBKcpNxQtAdRi4iamw3JdSLLqyZEz"
+			]
+		},
+		"Exponential.sol": {
+			"keccak256": "0xf6d6ed20e79083851436277b77546f76b8e4e766bde4fb50b3a6df84d678c44a",
+			"urls": [
+				"bzz-raw://06b9be8fc5e32d85f9f24a24263c8f0ebcd55eeb8f1819e28b73c14e57c5a924",
+				"dweb:/ipfs/QmZcvEjxfgJsVNkYGnX2rdWjetSDMXjJkoAxkmU1AFGxLj"
+			]
+		},
+		"ExponentialNoError.sol": {
+			"keccak256": "0x9eb8ba07ab046b7035580d814fe1a8970b24d4fb70b2a1655d38a293caa0b304",
+			"urls": [
+				"bzz-raw://353c9eb669b73993e1d1500bb97e3a2c4a1ef4a198ecee232b824e313af1516d",
+				"dweb:/ipfs/QmNeHWqnDizHN7WYjFEwC65i2RFsKDuUyF5xTwrD5sPhnV"
+			]
+		},
+		"InterestRateModel.sol": {
+			"keccak256": "0x180ad506065b60a7a049c682040722119da7e9e91d28639f419d353169c65905",
+			"urls": [
+				"bzz-raw://97a0b743efc7d69f772fd8b7bfa0419b7b7a118ffeadb21d44f8e71734f7212d",
+				"dweb:/ipfs/QmSm7xEET7Ao6nz6Egrf8SgtfKw6FW7EkU6X6dQs2kGS46"
+			]
+		},
+		"PriceOracle.sol": {
+			"keccak256": "0x764382e52cbe3f18490fb8251774cf4869d681de2d2c27d991724701f1a11a47",
+			"urls": [
+				"bzz-raw://bb6d7302a392f6f82104a667438d7324ac0ac616a90709eff30b09d5de491d56",
+				"dweb:/ipfs/QmdFxeBJPnrHdZzqcwMSU8ajxtmJ6j8eG5oRXgsZaFS8oG"
+			]
+		}
+	},
+	"version": 1
+}

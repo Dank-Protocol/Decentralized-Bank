@@ -1,0 +1,87 @@
+{
+	"compiler": {
+		"version": "0.6.12+commit.27d51765"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [
+					{
+						"internalType": "bytes",
+						"name": "message",
+						"type": "bytes"
+					},
+					{
+						"internalType": "bytes",
+						"name": "signature",
+						"type": "bytes"
+					}
+				],
+				"name": "source",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "pure",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"author": "Decentralized-Bank Labs, Inc.",
+			"kind": "dev",
+			"methods": {
+				"source(bytes,bytes)": {
+					"details": "Dankaring to a claimed address would add nothing,  as the caller could simply perform the recover and claim that address.",
+					"params": {
+						"message": "The data that was presumably signed",
+						"signature": "The fingerprint of the data + private key"
+					},
+					"returns": {
+						"_0": "The source address which signed the message, presumably"
+					}
+				}
+			},
+			"title": "The Open Oracle Data Base Contract",
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {
+				"source(bytes,bytes)": {
+					"notice": "Recovers the source address which signed a message"
+				}
+			},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"UniswapAnchoredView/UniswapAnchoredView.sol": "OpenOracleData"
+		},
+		"evmVersion": "istanbul",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": true,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"UniswapAnchoredView/UniswapAnchoredView.sol": {
+			"keccak256": "0x34d979a6a427cb9aee6431aeb357882dec3b696a79445d6f75fe6e2a817972bc",
+			"license": "GPL-3.0",
+			"urls": [
+				"bzz-raw://4bdc51dce1867ae77d63b9cbe52dd4fd4151faa0a6d56e8761deec4344bb95d7",
+				"dweb:/ipfs/QmduSeV6jxD3s9ZhsemFAA5eJJ2RnHSdoiCD5aKLr2GWjg"
+			]
+		}
+	},
+	"version": 1
+}

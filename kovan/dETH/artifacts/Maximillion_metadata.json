@@ -1,0 +1,201 @@
+{
+	"compiler": {
+		"version": "0.5.17+commit.d19bba13"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [
+					{
+						"internalType": "contract DEther",
+						"name": "dEther_",
+						"type": "address"
+					}
+				],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "constructor"
+			},
+			{
+				"constant": true,
+				"inputs": [],
+				"name": "dEther",
+				"outputs": [
+					{
+						"internalType": "contract DEther",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": false,
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "borrower",
+						"type": "address"
+					}
+				],
+				"name": "repayBehalf",
+				"outputs": [],
+				"payable": true,
+				"stateMutability": "payable",
+				"type": "function"
+			},
+			{
+				"constant": false,
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "borrower",
+						"type": "address"
+					},
+					{
+						"internalType": "contract DEther",
+						"name": "dEther_",
+						"type": "address"
+					}
+				],
+				"name": "repayBehalfExplicit",
+				"outputs": [],
+				"payable": true,
+				"stateMutability": "payable",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"author": "Decentralized-Bank",
+			"methods": {
+				"repayBehalf(address)": {
+					"details": "The provided Ether is applied towards the borrow balance, any excess is refunded",
+					"params": {
+						"borrower": "The address of the borrower account to repay on behalf of"
+					}
+				},
+				"repayBehalfExplicit(address,address)": {
+					"details": "The provided Ether is applied towards the borrow balance, any excess is refunded",
+					"params": {
+						"borrower": "The address of the borrower account to repay on behalf of",
+						"dEther_": "The address of the dEther contract to repay in"
+					}
+				}
+			},
+			"title": "Decentralized-Bank's Maximillion Contract"
+		},
+		"userdoc": {
+			"methods": {
+				"constructor": "Construct a Maximillion to repay max in a DEther market",
+				"repayBehalf(address)": {
+					"notice": "msg.sender sends Ether to repay an account's borrow in the dEther market"
+				},
+				"repayBehalfExplicit(address,address)": {
+					"notice": "msg.sender sends Ether to repay an account's borrow in a dEther market"
+				}
+			}
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"dETH/Maximillion.sol": "Maximillion"
+		},
+		"evmVersion": "istanbul",
+		"libraries": {},
+		"optimizer": {
+			"enabled": true,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"CarefulMath.sol": {
+			"keccak256": "0x2bd26a739db38973ae3105de64ed75973769f6474434ae4902dbdf8a99e45cf2",
+			"urls": [
+				"bzz-raw://82d402cb231ac5ba205d3d99271882f36b5609880c69d12dd7bd9f62ca118bfd",
+				"dweb:/ipfs/QmUwv8qMgEGNG77cDAkYzBbBoZX6pqCKiAhTHM9UgiBcyF"
+			]
+		},
+		"DToken.sol": {
+			"keccak256": "0xaf36486fa879b4b693f79709809c456d9e637c1ea3c93c4b16c1dd62f844bfd5",
+			"urls": [
+				"bzz-raw://9d282c97508bf83099d9348a2e0fe37d36308595e66bab2df56b85fb8198d1e6",
+				"dweb:/ipfs/QmXrWky1EMVUD7VAN3THcfUtNG9RTnXBJV11SbRK51DY19"
+			]
+		},
+		"DTokenInterfaces.sol": {
+			"keccak256": "0xc10528eb603336244c8a9f27859dc631a8ad620c5f6477d94a171e6bffa6c352",
+			"urls": [
+				"bzz-raw://99d71643358dbdfed8422fbd8fab9293cbf025c64b604b668fdf980c35796dce",
+				"dweb:/ipfs/QmTU1rtQvARE6LaZKSQhVjnguARePGQadsyuQNiJwCSvQV"
+			]
+		},
+		"DanktrollerInterface.sol": {
+			"keccak256": "0xa364c9d38317b2940abe0baa8bbd6d9b88175e679a2e95c06e0b7b5f8d13996c",
+			"urls": [
+				"bzz-raw://470dddc3128a76abc4426aed88aad84fe4090c84146886b4e08e24bca29e46e9",
+				"dweb:/ipfs/Qmei2YDz6x27HB7XWu4PuCbGcP7s7M8VPBeTBxLWKkHrhB"
+			]
+		},
+		"EIP20Interface.sol": {
+			"keccak256": "0xd89723953595fe8d91f53737d4685a4e1e0f42576f569b1118dfb3d1c0fd5419",
+			"urls": [
+				"bzz-raw://209124060d3973a9731d343168d6ad0eaa226cc041d6e7dc95738ce1ca30f9c3",
+				"dweb:/ipfs/QmeWg82d4desJSbh9rzWZVkaJoRmD6b25MQmxbgfmYUpoq"
+			]
+		},
+		"EIP20NonStandardInterface.sol": {
+			"keccak256": "0x234c4d9d37ba68e8e327951bbf9d8176b3daaa379abc9579f63eab00523be4f2",
+			"urls": [
+				"bzz-raw://15f8d45da762d8e16244cdc698b54400f585496fde6fe30a4c7dd0bbdd9b7e6a",
+				"dweb:/ipfs/QmQF4tXrtz6fpXyTe8rc1RdZoXmyvLiDxVfE5UntnpqEoq"
+			]
+		},
+		"ErrorReporter.sol": {
+			"keccak256": "0x695c2f7db5f48c2e1b31303211ad4e955f8b18aea2286ea1fcd2e7bdc3f98472",
+			"urls": [
+				"bzz-raw://12d2895d405d6197852bc53fc01231b9321931a123e26c1002d65f5eb981214a",
+				"dweb:/ipfs/QmcyFq1wJsZLUdeKXGBKcpNxQtAdRi4iamw3JdSLLqyZEz"
+			]
+		},
+		"Exponential.sol": {
+			"keccak256": "0xf6d6ed20e79083851436277b77546f76b8e4e766bde4fb50b3a6df84d678c44a",
+			"urls": [
+				"bzz-raw://06b9be8fc5e32d85f9f24a24263c8f0ebcd55eeb8f1819e28b73c14e57c5a924",
+				"dweb:/ipfs/QmZcvEjxfgJsVNkYGnX2rdWjetSDMXjJkoAxkmU1AFGxLj"
+			]
+		},
+		"ExponentialNoError.sol": {
+			"keccak256": "0x9eb8ba07ab046b7035580d814fe1a8970b24d4fb70b2a1655d38a293caa0b304",
+			"urls": [
+				"bzz-raw://353c9eb669b73993e1d1500bb97e3a2c4a1ef4a198ecee232b824e313af1516d",
+				"dweb:/ipfs/QmNeHWqnDizHN7WYjFEwC65i2RFsKDuUyF5xTwrD5sPhnV"
+			]
+		},
+		"InterestRateModel.sol": {
+			"keccak256": "0x180ad506065b60a7a049c682040722119da7e9e91d28639f419d353169c65905",
+			"urls": [
+				"bzz-raw://97a0b743efc7d69f772fd8b7bfa0419b7b7a118ffeadb21d44f8e71734f7212d",
+				"dweb:/ipfs/QmSm7xEET7Ao6nz6Egrf8SgtfKw6FW7EkU6X6dQs2kGS46"
+			]
+		},
+		"dETH/DEther.sol": {
+			"keccak256": "0x1f009ee00a4cbff1ab4fe2de4ff7d2421db713f0c76dce70fc5d4aff98719b47",
+			"urls": [
+				"bzz-raw://0013f58c51b279821bf8bf86c7e4ab3872477deae637491e07210dfe6d74933c",
+				"dweb:/ipfs/Qmai9tL8czHaQ3kyGTZY9FbesV4sdkGMxqW7LBXFVizi2R"
+			]
+		},
+		"dETH/Maximillion.sol": {
+			"keccak256": "0x3f233aa3a2bd3fe28652b2f473b70fa2ea11fa101c3afbbc26b829f10ce77cd3",
+			"urls": [
+				"bzz-raw://3d4da9fc6a9763b0ae31fa8dae7af8918ccb9c5f5d8462a5ea48247cc41db43a",
+				"dweb:/ipfs/QmUjsp6ob35AxsngJdiQFxD6WdyUyejGqef7VGEf1Z8LWK"
+			]
+		}
+	},
+	"version": 1
+}

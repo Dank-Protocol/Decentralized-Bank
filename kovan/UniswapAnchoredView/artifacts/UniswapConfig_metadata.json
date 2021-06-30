@@ -1,0 +1,505 @@
+{
+	"compiler": {
+		"version": "0.6.12+commit.27d51765"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [
+					{
+						"components": [
+							{
+								"internalType": "address",
+								"name": "dToken",
+								"type": "address"
+							},
+							{
+								"internalType": "address",
+								"name": "underlying",
+								"type": "address"
+							},
+							{
+								"internalType": "bytes32",
+								"name": "symbolHash",
+								"type": "bytes32"
+							},
+							{
+								"internalType": "uint256",
+								"name": "baseUnit",
+								"type": "uint256"
+							},
+							{
+								"internalType": "enum UniswapConfig.PriceSource",
+								"name": "priceSource",
+								"type": "uint8"
+							},
+							{
+								"internalType": "uint256",
+								"name": "fixedPrice",
+								"type": "uint256"
+							},
+							{
+								"internalType": "address",
+								"name": "uniswapMarket",
+								"type": "address"
+							},
+							{
+								"internalType": "bool",
+								"name": "isUniswapReversed",
+								"type": "bool"
+							}
+						],
+						"internalType": "struct UniswapConfig.TokenConfig[]",
+						"name": "configs",
+						"type": "tuple[]"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "constructor"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "i",
+						"type": "uint256"
+					}
+				],
+				"name": "getTokenConfig",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "address",
+								"name": "dToken",
+								"type": "address"
+							},
+							{
+								"internalType": "address",
+								"name": "underlying",
+								"type": "address"
+							},
+							{
+								"internalType": "bytes32",
+								"name": "symbolHash",
+								"type": "bytes32"
+							},
+							{
+								"internalType": "uint256",
+								"name": "baseUnit",
+								"type": "uint256"
+							},
+							{
+								"internalType": "enum UniswapConfig.PriceSource",
+								"name": "priceSource",
+								"type": "uint8"
+							},
+							{
+								"internalType": "uint256",
+								"name": "fixedPrice",
+								"type": "uint256"
+							},
+							{
+								"internalType": "address",
+								"name": "uniswapMarket",
+								"type": "address"
+							},
+							{
+								"internalType": "bool",
+								"name": "isUniswapReversed",
+								"type": "bool"
+							}
+						],
+						"internalType": "struct UniswapConfig.TokenConfig",
+						"name": "",
+						"type": "tuple"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "dToken",
+						"type": "address"
+					}
+				],
+				"name": "getTokenConfigByDToken",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "address",
+								"name": "dToken",
+								"type": "address"
+							},
+							{
+								"internalType": "address",
+								"name": "underlying",
+								"type": "address"
+							},
+							{
+								"internalType": "bytes32",
+								"name": "symbolHash",
+								"type": "bytes32"
+							},
+							{
+								"internalType": "uint256",
+								"name": "baseUnit",
+								"type": "uint256"
+							},
+							{
+								"internalType": "enum UniswapConfig.PriceSource",
+								"name": "priceSource",
+								"type": "uint8"
+							},
+							{
+								"internalType": "uint256",
+								"name": "fixedPrice",
+								"type": "uint256"
+							},
+							{
+								"internalType": "address",
+								"name": "uniswapMarket",
+								"type": "address"
+							},
+							{
+								"internalType": "bool",
+								"name": "isUniswapReversed",
+								"type": "bool"
+							}
+						],
+						"internalType": "struct UniswapConfig.TokenConfig",
+						"name": "",
+						"type": "tuple"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "symbol",
+						"type": "string"
+					}
+				],
+				"name": "getTokenConfigBySymbol",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "address",
+								"name": "dToken",
+								"type": "address"
+							},
+							{
+								"internalType": "address",
+								"name": "underlying",
+								"type": "address"
+							},
+							{
+								"internalType": "bytes32",
+								"name": "symbolHash",
+								"type": "bytes32"
+							},
+							{
+								"internalType": "uint256",
+								"name": "baseUnit",
+								"type": "uint256"
+							},
+							{
+								"internalType": "enum UniswapConfig.PriceSource",
+								"name": "priceSource",
+								"type": "uint8"
+							},
+							{
+								"internalType": "uint256",
+								"name": "fixedPrice",
+								"type": "uint256"
+							},
+							{
+								"internalType": "address",
+								"name": "uniswapMarket",
+								"type": "address"
+							},
+							{
+								"internalType": "bool",
+								"name": "isUniswapReversed",
+								"type": "bool"
+							}
+						],
+						"internalType": "struct UniswapConfig.TokenConfig",
+						"name": "",
+						"type": "tuple"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "symbolHash",
+						"type": "bytes32"
+					}
+				],
+				"name": "getTokenConfigBySymbolHash",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "address",
+								"name": "dToken",
+								"type": "address"
+							},
+							{
+								"internalType": "address",
+								"name": "underlying",
+								"type": "address"
+							},
+							{
+								"internalType": "bytes32",
+								"name": "symbolHash",
+								"type": "bytes32"
+							},
+							{
+								"internalType": "uint256",
+								"name": "baseUnit",
+								"type": "uint256"
+							},
+							{
+								"internalType": "enum UniswapConfig.PriceSource",
+								"name": "priceSource",
+								"type": "uint8"
+							},
+							{
+								"internalType": "uint256",
+								"name": "fixedPrice",
+								"type": "uint256"
+							},
+							{
+								"internalType": "address",
+								"name": "uniswapMarket",
+								"type": "address"
+							},
+							{
+								"internalType": "bool",
+								"name": "isUniswapReversed",
+								"type": "bool"
+							}
+						],
+						"internalType": "struct UniswapConfig.TokenConfig",
+						"name": "",
+						"type": "tuple"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "underlying",
+						"type": "address"
+					}
+				],
+				"name": "getTokenConfigByUnderlying",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "address",
+								"name": "dToken",
+								"type": "address"
+							},
+							{
+								"internalType": "address",
+								"name": "underlying",
+								"type": "address"
+							},
+							{
+								"internalType": "bytes32",
+								"name": "symbolHash",
+								"type": "bytes32"
+							},
+							{
+								"internalType": "uint256",
+								"name": "baseUnit",
+								"type": "uint256"
+							},
+							{
+								"internalType": "enum UniswapConfig.PriceSource",
+								"name": "priceSource",
+								"type": "uint8"
+							},
+							{
+								"internalType": "uint256",
+								"name": "fixedPrice",
+								"type": "uint256"
+							},
+							{
+								"internalType": "address",
+								"name": "uniswapMarket",
+								"type": "address"
+							},
+							{
+								"internalType": "bool",
+								"name": "isUniswapReversed",
+								"type": "bool"
+							}
+						],
+						"internalType": "struct UniswapConfig.TokenConfig",
+						"name": "",
+						"type": "tuple"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "maxTokens",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "numTokens",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {
+				"constructor": {
+					"params": {
+						"configs": "The configs for the supported assets"
+					}
+				},
+				"getTokenConfig(uint256)": {
+					"params": {
+						"i": "The index of the config to get"
+					},
+					"returns": {
+						"_0": "The config object"
+					}
+				},
+				"getTokenConfigByDToken(address)": {
+					"details": "If a config for the dToken is not found, falls back to searching for the underlying.",
+					"params": {
+						"dToken": "The address of the dToken of the config to get"
+					},
+					"returns": {
+						"_0": "The config object"
+					}
+				},
+				"getTokenConfigBySymbol(string)": {
+					"params": {
+						"symbol": "The symbol of the config to get"
+					},
+					"returns": {
+						"_0": "The config object"
+					}
+				},
+				"getTokenConfigBySymbolHash(bytes32)": {
+					"params": {
+						"symbolHash": "The keccack256 of the symbol of the config to get"
+					},
+					"returns": {
+						"_0": "The config object"
+					}
+				},
+				"getTokenConfigByUnderlying(address)": {
+					"params": {
+						"underlying": "The address of the underlying asset of the config to get"
+					},
+					"returns": {
+						"_0": "The config object"
+					}
+				}
+			},
+			"stateVariables": {
+				"maxTokens": {
+					"details": "Do not change this variable without updating all the fields throughout the contract."
+				}
+			},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {
+				"constructor": "Construct an immutable store of configs into the contract data",
+				"getTokenConfig(uint256)": {
+					"notice": "Get the i-th config, according to the order they were passed in originally"
+				},
+				"getTokenConfigByDToken(address)": {
+					"notice": "Get the config for the dToken"
+				},
+				"getTokenConfigBySymbol(string)": {
+					"notice": "Get the config for symbol"
+				},
+				"getTokenConfigBySymbolHash(bytes32)": {
+					"notice": "Get the config for the symbolHash"
+				},
+				"getTokenConfigByUnderlying(address)": {
+					"notice": "Get the config for an underlying asset"
+				},
+				"maxTokens()": {
+					"notice": "The max number of tokens this contract is hardcoded to support"
+				},
+				"numTokens()": {
+					"notice": "The number of tokens this contract actually supports"
+				}
+			},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"UniswapAnchoredView/UniswapAnchoredView.sol": "UniswapConfig"
+		},
+		"evmVersion": "istanbul",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": true,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"UniswapAnchoredView/UniswapAnchoredView.sol": {
+			"keccak256": "0x34d979a6a427cb9aee6431aeb357882dec3b696a79445d6f75fe6e2a817972bc",
+			"license": "GPL-3.0",
+			"urls": [
+				"bzz-raw://4bdc51dce1867ae77d63b9cbe52dd4fd4151faa0a6d56e8761deec4344bb95d7",
+				"dweb:/ipfs/QmduSeV6jxD3s9ZhsemFAA5eJJ2RnHSdoiCD5aKLr2GWjg"
+			]
+		}
+	},
+	"version": 1
+}
