@@ -1,8 +1,8 @@
 pragma solidity ^0.5.16;
 
-import "../DanktrollerInterface.sol";
-import "../InterestRateModel.sol";
-import "../EIP20NonStandardInterface.sol";
+import "./DanktrollerInterface.sol";
+import "./InterestRateModel.sol";
+import "./EIP20NonStandardInterface.sol";
 
 contract DTokenStorage {
     /**

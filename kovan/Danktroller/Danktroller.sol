@@ -145,7 +145,7 @@ contract Danktroller is DanktrollerV4Storage, DanktrollerInterface, DanktrollerE
             return Error.MARKET_NOT_LISTED;
         }
 
-        if (marketToJoin.accountMembership[borrower] == true) {
+        if (marketToJoin.accountMembership[borrower]) {
             // already joined
             return Error.NO_ERROR;
         }
@@ -270,9 +270,9 @@ contract Danktroller is DanktrollerV4Storage, DanktrollerInterface, DanktrollerE
         mintTokens;
 
         // Shh - we don't ever want this hook to be marked pure
-        if (false) {
-            maxAssets = maxAssets;
-        }
+//        if (false) {
+//            maxAssets = maxAssets;
+//        }
     }
 
     /**
@@ -1014,7 +1014,7 @@ contract Danktroller is DanktrollerV4Storage, DanktrollerInterface, DanktrollerE
             return fail(Error.MARKET_ALREADY_LISTED, FailureInfo.SUPPORT_MARKET_EXISTS);
         }
 
-        dToken.isDToken(); // Sanity check to make sure its really a DToken
+        require(dToken.isDToken(), "This is not a DToken contract!"); // Sanity check to make sure its really a DToken
 
         markets[address(dToken)] = Market({isListed: true, isDanked: false, collateralFactorMantissa: 0});
 
@@ -1422,6 +1422,6 @@ contract Danktroller is DanktrollerV4Storage, DanktrollerInterface, DanktrollerE
      * @return The address of DANK
      */
     function getDankAddress() public view returns (address) {
-        return 0x228C84626d7D2897C03aafE97d68cdF187a13FAf;
+        return 0x21B908f153062D916bfA87a8De78B5cBae991b1A;
     }
 }

@@ -1,6 +1,6 @@
 {
 	"compiler": {
-		"version": "0.6.12+commit.27d51765"
+		"version": "0.6.10+commit.00c0fcaf"
 	},
 	"language": "Solidity",
 	"output": {
@@ -32,7 +32,6 @@
 		],
 		"devdoc": {
 			"author": "Decentralized-Bank Labs, Inc.",
-			"kind": "dev",
 			"methods": {
 				"source(bytes,bytes)": {
 					"details": "Dankaring to a claimed address would add nothing,  as the caller could simply perform the recover and claim that address.",
@@ -45,22 +44,19 @@
 					}
 				}
 			},
-			"title": "The Open Oracle Data Base Contract",
-			"version": 1
+			"title": "The Open Oracle Data Base Contract"
 		},
 		"userdoc": {
-			"kind": "user",
 			"methods": {
 				"source(bytes,bytes)": {
 					"notice": "Recovers the source address which signed a message"
 				}
-			},
-			"version": 1
+			}
 		}
 	},
 	"settings": {
 		"compilationTarget": {
-			"UniswapAnchoredView/UniswapAnchoredView.sol": "OpenOracleData"
+			"kovan/UniswapAnchoredView/UniswapAnchoredView.sol": "OpenOracleData"
 		},
 		"evmVersion": "istanbul",
 		"libraries": {},
@@ -74,12 +70,12 @@
 		"remappings": []
 	},
 	"sources": {
-		"UniswapAnchoredView/UniswapAnchoredView.sol": {
-			"keccak256": "0x34d979a6a427cb9aee6431aeb357882dec3b696a79445d6f75fe6e2a817972bc",
+		"kovan/UniswapAnchoredView/UniswapAnchoredView.sol": {
+			"keccak256": "0xde1162350d020b0cf9dfd33a0b4491c9aa3612c19057854d7d3ec2ff590507a4",
 			"license": "GPL-3.0",
 			"urls": [
-				"bzz-raw://4bdc51dce1867ae77d63b9cbe52dd4fd4151faa0a6d56e8761deec4344bb95d7",
-				"dweb:/ipfs/QmduSeV6jxD3s9ZhsemFAA5eJJ2RnHSdoiCD5aKLr2GWjg"
+				"bzz-raw://7676a19bea0d238e787777d86ce84832e7a0f722d6d020d5c308348f13c42281",
+				"dweb:/ipfs/QmT1MzK2CLf32m2ENke8o2bBASgS87dueEGCT3rzcmYtFb"
 			]
 		}
 	},

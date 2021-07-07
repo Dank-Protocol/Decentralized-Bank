@@ -1,6 +1,6 @@
 {
 	"compiler": {
-		"version": "0.6.12+commit.27d51765"
+		"version": "0.6.10+commit.00c0fcaf"
 	},
 	"language": "Solidity",
 	"output": {
@@ -57,6 +57,25 @@
 				],
 				"stateMutability": "nonpayable",
 				"type": "constructor"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "symbol",
+						"type": "string"
+					}
+				],
+				"name": "getHashBySymbol",
+				"outputs": [
+					{
+						"internalType": "bytes32",
+						"name": "",
+						"type": "bytes32"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
 			},
 			{
 				"inputs": [
@@ -391,7 +410,6 @@
 			}
 		],
 		"devdoc": {
-			"kind": "dev",
 			"methods": {
 				"constructor": {
 					"params": {
@@ -444,11 +462,9 @@
 				"maxTokens": {
 					"details": "Do not change this variable without updating all the fields throughout the contract."
 				}
-			},
-			"version": 1
+			}
 		},
 		"userdoc": {
-			"kind": "user",
 			"methods": {
 				"constructor": "Construct an immutable store of configs into the contract data",
 				"getTokenConfig(uint256)": {
@@ -472,13 +488,12 @@
 				"numTokens()": {
 					"notice": "The number of tokens this contract actually supports"
 				}
-			},
-			"version": 1
+			}
 		}
 	},
 	"settings": {
 		"compilationTarget": {
-			"UniswapAnchoredView/UniswapAnchoredView.sol": "UniswapConfig"
+			"kovan/UniswapAnchoredView/UniswapAnchoredView.sol": "UniswapConfig"
 		},
 		"evmVersion": "istanbul",
 		"libraries": {},
@@ -492,12 +507,12 @@
 		"remappings": []
 	},
 	"sources": {
-		"UniswapAnchoredView/UniswapAnchoredView.sol": {
-			"keccak256": "0x34d979a6a427cb9aee6431aeb357882dec3b696a79445d6f75fe6e2a817972bc",
+		"kovan/UniswapAnchoredView/UniswapAnchoredView.sol": {
+			"keccak256": "0xde1162350d020b0cf9dfd33a0b4491c9aa3612c19057854d7d3ec2ff590507a4",
 			"license": "GPL-3.0",
 			"urls": [
-				"bzz-raw://4bdc51dce1867ae77d63b9cbe52dd4fd4151faa0a6d56e8761deec4344bb95d7",
-				"dweb:/ipfs/QmduSeV6jxD3s9ZhsemFAA5eJJ2RnHSdoiCD5aKLr2GWjg"
+				"bzz-raw://7676a19bea0d238e787777d86ce84832e7a0f722d6d020d5c308348f13c42281",
+				"dweb:/ipfs/QmT1MzK2CLf32m2ENke8o2bBASgS87dueEGCT3rzcmYtFb"
 			]
 		}
 	},

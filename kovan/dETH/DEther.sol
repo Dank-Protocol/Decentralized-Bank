@@ -1,4 +1,11 @@
 pragma solidity ^0.5.16;
+//Arg [0] : comptroller_ (address): 0x5eae89dc1c671724a672ff0630122ee834098657
+//Arg [1] : interestRateModel_ (address): 0xc1b496a3a4eee148aeefd86af7e2ab1ceb53605c
+//Arg [2] : initialExchangeRateMantissa_ (uint256): 200000000000000000000000000
+//Arg [3] : name_ (string): Dank ETH
+//Arg [4] : symbol_ (string): dETH
+//Arg [5] : decimals_ (uint8): 8
+//Arg [6] : admin_ (address): 0xa776184fd6f545dae5f51361dbcc9018549a9749
 
 import "../DToken.sol";
 

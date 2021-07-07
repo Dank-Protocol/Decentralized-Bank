@@ -1685,10 +1685,10 @@
 			]
 		},
 		"dETH/DEther.sol": {
-			"keccak256": "0x1f009ee00a4cbff1ab4fe2de4ff7d2421db713f0c76dce70fc5d4aff98719b47",
+			"keccak256": "0x487852b8d327e5ea9c128fe40b51be690c6801f23df9e611c779ae2dc9c4fe4c",
 			"urls": [
-				"bzz-raw://0013f58c51b279821bf8bf86c7e4ab3872477deae637491e07210dfe6d74933c",
-				"dweb:/ipfs/Qmai9tL8czHaQ3kyGTZY9FbesV4sdkGMxqW7LBXFVizi2R"
+				"bzz-raw://d85f9e97ec3b7f304068d3d24f15793579fa72b4524a09c992ca5785b34cb131",
+				"dweb:/ipfs/QmWTeS3ypu81LXdxFY6rZErGxb9MuBbLXxYJJjVNU3aLVc"
 			]
 		}
 	},

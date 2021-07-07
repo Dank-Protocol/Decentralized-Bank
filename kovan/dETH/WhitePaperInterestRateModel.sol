@@ -1,5 +1,11 @@
 pragma solidity ^0.5.16;
-
+//CETHER
+//Arg [0] : baseRatePerYear (uint256): 20000000000000000
+//Arg [1] : multiplierPerYear (uint256): 100000000000000000
+//WBTC
+//-----Decoded View---------------
+//Arg [0] : baseRatePerYear (uint256): 20000000000000000
+//Arg [1] : multiplierPerYear (uint256): 300000000000000000
 import "../InterestRateModel.sol";
 import "../SafeMath.sol";
 

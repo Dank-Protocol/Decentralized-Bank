@@ -1,6 +1,6 @@
 {
 	"compiler": {
-		"version": "0.5.16+commit.9c3226ce"
+		"version": "0.5.17+commit.d19bba13"
 	},
 	"language": "Solidity",
 	"output": {
@@ -8,8 +8,13 @@
 			{
 				"inputs": [
 					{
-						"internalType": "contract ComptrollerInterface",
-						"name": "comptroller_",
+						"internalType": "address",
+						"name": "underlying_",
+						"type": "address"
+					},
+					{
+						"internalType": "contract DanktrollerInterface",
+						"name": "danktroller_",
 						"type": "address"
 					},
 					{
@@ -183,7 +188,7 @@
 					{
 						"indexed": false,
 						"internalType": "address",
-						"name": "cTokenCollateral",
+						"name": "dTokenCollateral",
 						"type": "address"
 					},
 					{
@@ -245,18 +250,18 @@
 				"inputs": [
 					{
 						"indexed": false,
-						"internalType": "contract ComptrollerInterface",
-						"name": "oldComptroller",
+						"internalType": "contract DanktrollerInterface",
+						"name": "oldDanktroller",
 						"type": "address"
 					},
 					{
 						"indexed": false,
-						"internalType": "contract ComptrollerInterface",
-						"name": "newComptroller",
+						"internalType": "contract DanktrollerInterface",
+						"name": "newDanktroller",
 						"type": "address"
 					}
 				],
-				"name": "NewComptroller",
+				"name": "NewDanktroller",
 				"type": "event"
 			},
 			{
@@ -454,14 +459,30 @@
 				"type": "event"
 			},
 			{
-				"payable": true,
-				"stateMutability": "payable",
-				"type": "fallback"
-			},
-			{
 				"constant": false,
 				"inputs": [],
 				"name": "_acceptAdmin",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"constant": false,
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "addAmount",
+						"type": "uint256"
+					}
+				],
+				"name": "_addReserves",
 				"outputs": [
 					{
 						"internalType": "uint256",
@@ -498,12 +519,12 @@
 				"constant": false,
 				"inputs": [
 					{
-						"internalType": "contract ComptrollerInterface",
-						"name": "newComptroller",
+						"internalType": "contract DanktrollerInterface",
+						"name": "newDanktroller",
 						"type": "address"
 					}
 				],
-				"name": "_setComptroller",
+				"name": "_setDanktroller",
 				"outputs": [
 					{
 						"internalType": "uint256",
@@ -813,10 +834,10 @@
 			{
 				"constant": true,
 				"inputs": [],
-				"name": "comptroller",
+				"name": "danktroller",
 				"outputs": [
 					{
-						"internalType": "contract ComptrollerInterface",
+						"internalType": "contract DanktrollerInterface",
 						"name": "",
 						"type": "address"
 					}
@@ -925,8 +946,53 @@
 				"constant": false,
 				"inputs": [
 					{
-						"internalType": "contract ComptrollerInterface",
-						"name": "comptroller_",
+						"internalType": "address",
+						"name": "underlying_",
+						"type": "address"
+					},
+					{
+						"internalType": "contract DanktrollerInterface",
+						"name": "danktroller_",
+						"type": "address"
+					},
+					{
+						"internalType": "contract InterestRateModel",
+						"name": "interestRateModel_",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "initialExchangeRateMantissa_",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "name_",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "symbol_",
+						"type": "string"
+					},
+					{
+						"internalType": "uint8",
+						"name": "decimals_",
+						"type": "uint8"
+					}
+				],
+				"name": "initialize",
+				"outputs": [],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"constant": false,
+				"inputs": [
+					{
+						"internalType": "contract DanktrollerInterface",
+						"name": "danktroller_",
 						"type": "address"
 					},
 					{
@@ -979,7 +1045,7 @@
 			{
 				"constant": true,
 				"inputs": [],
-				"name": "isCToken",
+				"name": "isDToken",
 				"outputs": [
 					{
 						"internalType": "bool",
@@ -1000,24 +1066,47 @@
 						"type": "address"
 					},
 					{
-						"internalType": "contract CToken",
-						"name": "cTokenCollateral",
+						"internalType": "uint256",
+						"name": "repayAmount",
+						"type": "uint256"
+					},
+					{
+						"internalType": "contract DTokenInterface",
+						"name": "dTokenCollateral",
 						"type": "address"
 					}
 				],
 				"name": "liquidateBorrow",
-				"outputs": [],
-				"payable": true,
-				"stateMutability": "payable",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"payable": false,
+				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
 				"constant": false,
-				"inputs": [],
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "mintAmount",
+						"type": "uint256"
+					}
+				],
 				"name": "mint",
-				"outputs": [],
-				"payable": true,
-				"stateMutability": "payable",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"payable": false,
+				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
@@ -1094,11 +1183,23 @@
 			},
 			{
 				"constant": false,
-				"inputs": [],
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "repayAmount",
+						"type": "uint256"
+					}
+				],
 				"name": "repayBorrow",
-				"outputs": [],
-				"payable": true,
-				"stateMutability": "payable",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"payable": false,
+				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
@@ -1108,12 +1209,23 @@
 						"internalType": "address",
 						"name": "borrower",
 						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "repayAmount",
+						"type": "uint256"
 					}
 				],
 				"name": "repayBorrowBehalf",
-				"outputs": [],
-				"payable": true,
-				"stateMutability": "payable",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"payable": false,
+				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
@@ -1175,6 +1287,21 @@
 				],
 				"payable": false,
 				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": false,
+				"inputs": [
+					{
+						"internalType": "contract EIP20NonStandardInterface",
+						"name": "token",
+						"type": "address"
+					}
+				],
+				"name": "sweepToken",
+				"outputs": [],
+				"payable": false,
+				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
@@ -1308,13 +1435,34 @@
 				"payable": false,
 				"stateMutability": "nonpayable",
 				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [],
+				"name": "underlying",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
 			}
 		],
 		"devdoc": {
-			"author": "Compound",
+			"author": "Dank",
 			"methods": {
 				"_acceptAdmin()": {
 					"details": "Admin function for pending admin to accept role and update admin",
+					"return": "uint 0=success, otherwise a failure (see ErrorReporter.sol for details)"
+				},
+				"_addReserves(uint256)": {
+					"params": {
+						"addAmount": "The amount fo underlying token to add as reserves"
+					},
 					"return": "uint 0=success, otherwise a failure (see ErrorReporter.sol for details)"
 				},
 				"_reduceReserves(uint256)": {
@@ -1323,8 +1471,8 @@
 					},
 					"return": "uint 0=success, otherwise a failure (see ErrorReporter.sol for details)"
 				},
-				"_setComptroller(address)": {
-					"details": "Admin function to set a new comptroller",
+				"_setDanktroller(address)": {
+					"details": "Admin function to set a new danktroller",
 					"return": "uint 0=success, otherwise a failure (see ErrorReporter.sol for details)"
 				},
 				"_setInterestRateModel(address)": {
@@ -1400,12 +1548,13 @@
 				"constructor": {
 					"params": {
 						"admin_": "Address of the administrator of this token",
-						"comptroller_": "The address of the Comptroller",
+						"danktroller_": "The address of the Danktroller",
 						"decimals_": "ERC-20 decimal precision of this token",
 						"initialExchangeRateMantissa_": "The initial exchange rate, scaled by 1e18",
 						"interestRateModel_": "The address of the interest rate model",
 						"name_": "ERC-20 name of this token",
-						"symbol_": "ERC-20 symbol of this token"
+						"symbol_": "ERC-20 symbol of this token",
+						"underlying_": "The address of the underlying asset"
 					}
 				},
 				"exchangeRateCurrent()": {
@@ -1416,7 +1565,7 @@
 					"return": "Calculated exchange rate scaled by 1e18"
 				},
 				"getAccountSnapshot(address)": {
-					"details": "This is used by comptroller to more efficiently perform liquidity checks.",
+					"details": "This is used by danktroller to more efficiently perform liquidity checks.",
 					"params": {
 						"account": "Address of the account to snapshot"
 					},
@@ -1425,9 +1574,20 @@
 				"getCash()": {
 					"return": "The quantity of underlying asset owned by this contract"
 				},
+				"initialize(address,address,address,uint256,string,string,uint8)": {
+					"params": {
+						"danktroller_": "The address of the Danktroller",
+						"decimals_": "ERC-20 decimal precision of this token",
+						"initialExchangeRateMantissa_": "The initial exchange rate, scaled by 1e18",
+						"interestRateModel_": "The address of the interest rate model",
+						"name_": "ERC-20 name of this token",
+						"symbol_": "ERC-20 symbol of this token",
+						"underlying_": "The address of the underlying asset"
+					}
+				},
 				"initialize(address,address,uint256,string,string,uint8)": {
 					"params": {
-						"comptroller_": "The address of the Comptroller",
+						"danktroller_": "The address of the Danktroller",
 						"decimals_": "EIP-20 decimal precision of this token",
 						"initialExchangeRateMantissa_": "The initial exchange rate, scaled by 1e18",
 						"interestRateModel_": "The address of the interest rate model",
@@ -1435,20 +1595,25 @@
 						"symbol_": "EIP-20 symbol of this token"
 					}
 				},
-				"liquidateBorrow(address,address)": {
-					"details": "Reverts upon any failure",
+				"liquidateBorrow(address,uint256,address)": {
 					"params": {
-						"borrower": "The borrower of this cToken to be liquidated",
-						"cTokenCollateral": "The market in which to seize collateral from the borrower"
-					}
+						"borrower": "The borrower of this dToken to be liquidated",
+						"dTokenCollateral": "The market in which to seize collateral from the borrower",
+						"repayAmount": "The amount of the underlying borrowed asset to repay"
+					},
+					"return": "uint 0=success, otherwise a failure (see ErrorReporter.sol for details)"
 				},
-				"mint()": {
-					"details": "Reverts upon any failure"
+				"mint(uint256)": {
+					"details": "Accrues interest whether or not the operation succeeds, unless reverted",
+					"params": {
+						"mintAmount": "The amount of the underlying asset to supply"
+					},
+					"return": "uint 0=success, otherwise a failure (see ErrorReporter.sol for details)"
 				},
 				"redeem(uint256)": {
 					"details": "Accrues interest whether or not the operation succeeds, unless reverted",
 					"params": {
-						"redeemTokens": "The number of cTokens to redeem into underlying"
+						"redeemTokens": "The number of dTokens to redeem into underlying"
 					},
 					"return": "uint 0=success, otherwise a failure (see ErrorReporter.sol for details)"
 				},
@@ -1459,26 +1624,35 @@
 					},
 					"return": "uint 0=success, otherwise a failure (see ErrorReporter.sol for details)"
 				},
-				"repayBorrow()": {
-					"details": "Reverts upon any failure"
-				},
-				"repayBorrowBehalf(address)": {
-					"details": "Reverts upon any failure",
+				"repayBorrow(uint256)": {
 					"params": {
-						"borrower": "the account with the debt being payed off"
-					}
+						"repayAmount": "The amount to repay"
+					},
+					"return": "uint 0=success, otherwise a failure (see ErrorReporter.sol for details)"
+				},
+				"repayBorrowBehalf(address,uint256)": {
+					"params": {
+						"borrower": "the account with the debt being payed off",
+						"repayAmount": "The amount to repay"
+					},
+					"return": "uint 0=success, otherwise a failure (see ErrorReporter.sol for details)"
 				},
 				"seize(address,address,uint256)": {
-					"details": "Will fail unless called by another cToken during the process of liquidation. Its absolutely critical to use msg.sender as the borrowed cToken and not a parameter.",
+					"details": "Will fail unless called by another dToken during the process of liquidation. Its absolutely critical to use msg.sender as the borrowed dToken and not a parameter.",
 					"params": {
 						"borrower": "The account having collateral seized",
 						"liquidator": "The account receiving seized collateral",
-						"seizeTokens": "The number of cTokens to seize"
+						"seizeTokens": "The number of dTokens to seize"
 					},
 					"return": "uint 0=success, otherwise a failure (see ErrorReporter.sol for details)"
 				},
 				"supplyRatePerBlock()": {
 					"return": "The supply interest rate per block, scaled by 1e18"
+				},
+				"sweepToken(address)": {
+					"params": {
+						"token": "The address of the ERC-20 token to sweep"
+					}
 				},
 				"totalBorrowsCurrent()": {
 					"return": "The total borrows with interest"
@@ -1499,18 +1673,21 @@
 					"return": "Whether or not the transfer succeeded"
 				}
 			},
-			"title": "Compound's DEther Contract"
+			"title": "Dank's DErc20Immutable Contract"
 		},
 		"userdoc": {
 			"methods": {
 				"_acceptAdmin()": {
 					"notice": "Accepts transfer of admin rights. msg.sender must be pendingAdmin"
 				},
+				"_addReserves(uint256)": {
+					"notice": "The sender adds to reserves."
+				},
 				"_reduceReserves(uint256)": {
 					"notice": "Accrues interest and reduces reserves by transferring to admin"
 				},
-				"_setComptroller(address)": {
-					"notice": "Sets a new comptroller for the market"
+				"_setDanktroller(address)": {
+					"notice": "Sets a new danktroller for the market"
 				},
 				"_setInterestRateModel(address)": {
 					"notice": "accrues interest and updates the interest rate model using _setInterestRateModelFresh"
@@ -1546,47 +1723,53 @@
 					"notice": "Return the borrow balance of account based on stored data"
 				},
 				"borrowRatePerBlock()": {
-					"notice": "Returns the current per-block borrow interest rate for this cToken"
+					"notice": "Returns the current per-block borrow interest rate for this dToken"
 				},
-				"constructor": "Construct a new DEther money market",
+				"constructor": "Construct a new money market",
 				"exchangeRateCurrent()": {
 					"notice": "Accrue interest then return the up-to-date exchange rate"
 				},
 				"exchangeRateStored()": {
-					"notice": "Calculates the exchange rate from the underlying to the CToken"
+					"notice": "Calculates the exchange rate from the underlying to the DToken"
 				},
 				"getAccountSnapshot(address)": {
 					"notice": "Get a snapshot of the account's balances, and the cached exchange rate"
 				},
 				"getCash()": {
-					"notice": "Get cash balance of this cToken in the underlying asset"
+					"notice": "Get cash balance of this dToken in the underlying asset"
+				},
+				"initialize(address,address,address,uint256,string,string,uint8)": {
+					"notice": "Initialize the new money market"
 				},
 				"initialize(address,address,uint256,string,string,uint8)": {
 					"notice": "Initialize the money market"
 				},
-				"liquidateBorrow(address,address)": {
+				"liquidateBorrow(address,uint256,address)": {
 					"notice": "The sender liquidates the borrowers collateral. The collateral seized is transferred to the liquidator."
 				},
-				"mint()": {
-					"notice": "Sender supplies assets into the market and receives cTokens in exchange"
+				"mint(uint256)": {
+					"notice": "Sender supplies assets into the market and receives dTokens in exchange"
 				},
 				"redeem(uint256)": {
-					"notice": "Sender redeems cTokens in exchange for the underlying asset"
+					"notice": "Sender redeems dTokens in exchange for the underlying asset"
 				},
 				"redeemUnderlying(uint256)": {
-					"notice": "Sender redeems cTokens in exchange for a specified amount of underlying asset"
+					"notice": "Sender redeems dTokens in exchange for a specified amount of underlying asset"
 				},
-				"repayBorrow()": {
+				"repayBorrow(uint256)": {
 					"notice": "Sender repays their own borrow"
 				},
-				"repayBorrowBehalf(address)": {
+				"repayBorrowBehalf(address,uint256)": {
 					"notice": "Sender repays a borrow belonging to borrower"
 				},
 				"seize(address,address,uint256)": {
 					"notice": "Transfers collateral tokens (this market) to the liquidator."
 				},
 				"supplyRatePerBlock()": {
-					"notice": "Returns the current per-block supply interest rate for this cToken"
+					"notice": "Returns the current per-block supply interest rate for this dToken"
+				},
+				"sweepToken(address)": {
+					"notice": "A public function to sweep accidental ERC-20 transfers to this contract. Tokens are sent to admin (timelock)"
 				},
 				"totalBorrowsCurrent()": {
 					"notice": "Returns the current total borrows plus accrued interest"
@@ -1598,12 +1781,12 @@
 					"notice": "Transfer `amount` tokens from `src` to `dst`"
 				}
 			},
-			"notice": "CToken which wraps Ether"
+			"notice": "DTokens which wrap an EIP-20 underlying and are immutable"
 		}
 	},
 	"settings": {
 		"compilationTarget": {
-			"kovan/dETH/DEther.sol": "DEther"
+			"kovan/DErc20Immutable/DErc20Immutable.sol": "DErc20Immutable"
 		},
 		"evmVersion": "istanbul",
 		"libraries": {},
@@ -1614,74 +1797,88 @@
 		"remappings": []
 	},
 	"sources": {
-		"kovan/dETH/DEther.sol": {
-			"keccak256": "0xd521ddbe824593ad15af37b801c0dbba5d74cee204ab6f2aaa4175b13cf92524",
+		"kovan/CarefulMath.sol": {
+			"keccak256": "0x2bd26a739db38973ae3105de64ed75973769f6474434ae4902dbdf8a99e45cf2",
 			"urls": [
-				"bzz-raw://aeb5ec8a4807555a0e0497a69b84809511e0a344588bdc31e98b07e6f06727df",
-				"dweb:/ipfs/QmRZqdA1Dsuejyv5ATvGhUKJCHArc9q23VhvRmN7mzMdnW"
+				"bzz-raw://82d402cb231ac5ba205d3d99271882f36b5609880c69d12dd7bd9f62ca118bfd",
+				"dweb:/ipfs/QmUwv8qMgEGNG77cDAkYzBbBoZX6pqCKiAhTHM9UgiBcyF"
 			]
 		},
-		"kovan/dETH/CToken.sol": {
-			"keccak256": "0x33fcd5c2aeb5122ee7d664f8615d3ce3eec52000eaee66b43d1d9d4c52184a91",
+		"kovan/DErc20.sol": {
+			"keccak256": "0x90d9911d23f722c2fc4d3ef38d62b8c1cfd0a8721a4f04b81800fc2272417432",
 			"urls": [
-				"bzz-raw://6d5579b6383590f6609d44619ad37e8ef47caa07b159c5a4ad1072882d169a6d",
-				"dweb:/ipfs/QmVmgE6sdR4H6JBUBfBQqSue8bPJgRyj2DZGh2WxatYAN1"
+				"bzz-raw://559bff318ec570a9587a62ed6182022216eec866cd030851776e6b605261cca8",
+				"dweb:/ipfs/QmWt6fHx2nVw36P3LteCVfajvbSMjCqGjnk8d4HW1A4BKp"
 			]
 		},
-		"kovan/dETH/CTokenInterfaces.sol": {
-			"keccak256": "0x0825302e36bd78c566c3ac58593bd5019e42c0f82aff1439827f34344dde729c",
+		"kovan/DErc20Immutable/DErc20Immutable.sol": {
+			"keccak256": "0x8f137fca06fe833000f97261a4ce45e37de4a3d43ed734da5f69c77836372f81",
 			"urls": [
-				"bzz-raw://9edd24aac93c1bd18e082551ddd73182bf17dee50406a04c9009249733ffe5a1",
-				"dweb:/ipfs/QmPgQ5zwcZfNWZmEMVm3x2ihAC3HmF97Cnaqg4yHb1ou7T"
+				"bzz-raw://aef54b677ede7b601e4268f8bda534c420b3e8f9dc70f60d365f9f03748d1e82",
+				"dweb:/ipfs/QmXZov4eEKsFBabTwhpCxGJeiTZUN66fqD6Y7rcWommxQB"
 			]
 		},
-		"kovan/dETH/CarefulMath.sol": {
-			"keccak256": "0x57d6930a0f3d3c17cc2685161c1e71d972c6045807bbd6e657e53aa3b4609408",
+		"kovan/DToken.sol": {
+			"keccak256": "0x19a944e7413df070d0acbdf7aac09a342b3314b7ce7ea7f5d09aa749f07ed753",
 			"urls": [
-				"bzz-raw://7c0abdf53adebc5b67d9f6bf4f1ade10a27a56e31ed73ec784b28af1d6c98adc",
-				"dweb:/ipfs/QmXND9GoV4UH2D48fjZ9WUVyyjUo1LrKjuR4txFNVWX4zd"
+				"bzz-raw://924d02cbce495ae82b842de3f9c1047a9950af9680484ffd22b7932679c86712",
+				"dweb:/ipfs/QmZaLhjC4rBAwGXAKFZdtAARNXiFV9AfMRWjJRUtkJ1Nd2"
 			]
 		},
-		"kovan/dETH/ComptrollerInterface.sol": {
-			"keccak256": "0xdf38109d097fff3e724bd45a4cbd2f892148162c3c96db179fcb7a1ef45b5167",
+		"kovan/DTokenInterfaces.sol": {
+			"keccak256": "0xb3d16722d1bfd16d75e38e392060cf6cdef5673dfca83cfe5b7ee5c340dd71c3",
 			"urls": [
-				"bzz-raw://feb55e41b176aa76194b6bb1e8b50c9fb8e1ac53a35c7c1719c2273eba22fb45",
-				"dweb:/ipfs/QmToG3P2w1UCwK3W1KjFh4x77HouVLBa9sY5SaoyVxkMCx"
+				"bzz-raw://7ed12c5d63dee82c0072f962051bdb87077ac1048cc64b21a63fadd5fb6e985b",
+				"dweb:/ipfs/QmYMLZc5UrD97K6Rxy13QbM5w8kaj1bxvFMp8wMGHrKaz2"
 			]
 		},
-		"kovan/dETH/EIP20Interface.sol": {
+		"kovan/DanktrollerInterface.sol": {
+			"keccak256": "0xa364c9d38317b2940abe0baa8bbd6d9b88175e679a2e95c06e0b7b5f8d13996c",
+			"urls": [
+				"bzz-raw://470dddc3128a76abc4426aed88aad84fe4090c84146886b4e08e24bca29e46e9",
+				"dweb:/ipfs/Qmei2YDz6x27HB7XWu4PuCbGcP7s7M8VPBeTBxLWKkHrhB"
+			]
+		},
+		"kovan/EIP20Interface.sol": {
 			"keccak256": "0xd89723953595fe8d91f53737d4685a4e1e0f42576f569b1118dfb3d1c0fd5419",
 			"urls": [
 				"bzz-raw://209124060d3973a9731d343168d6ad0eaa226cc041d6e7dc95738ce1ca30f9c3",
 				"dweb:/ipfs/QmeWg82d4desJSbh9rzWZVkaJoRmD6b25MQmxbgfmYUpoq"
 			]
 		},
-		"kovan/dETH/EIP20NonStandardInterface.sol": {
+		"kovan/EIP20NonStandardInterface.sol": {
 			"keccak256": "0x234c4d9d37ba68e8e327951bbf9d8176b3daaa379abc9579f63eab00523be4f2",
 			"urls": [
 				"bzz-raw://15f8d45da762d8e16244cdc698b54400f585496fde6fe30a4c7dd0bbdd9b7e6a",
 				"dweb:/ipfs/QmQF4tXrtz6fpXyTe8rc1RdZoXmyvLiDxVfE5UntnpqEoq"
 			]
 		},
-		"kovan/dETH/ErrorReporter.sol": {
-			"keccak256": "0x93e17c2249e72b34fb9ed172d00bf8ae41014669d3cd4b70a37ac4427ad6a134",
+		"kovan/ErrorReporter.sol": {
+			"keccak256": "0x695c2f7db5f48c2e1b31303211ad4e955f8b18aea2286ea1fcd2e7bdc3f98472",
 			"urls": [
-				"bzz-raw://126775a980bf548a4b447475b05c4c5e0720920dafb2b6a18886f4bfa2016418",
-				"dweb:/ipfs/QmcHiBmeucUk9kqnZxoPbW7DZmZEWexVWhEYbTFRFmeixX"
+				"bzz-raw://12d2895d405d6197852bc53fc01231b9321931a123e26c1002d65f5eb981214a",
+				"dweb:/ipfs/QmcyFq1wJsZLUdeKXGBKcpNxQtAdRi4iamw3JdSLLqyZEz"
 			]
 		},
-		"kovan/dETH/Exponential.sol": {
-			"keccak256": "0x22579c580662c8b8897c87b4a0b728fc8da28a2dc8bd4247b8a020f577ee3554",
+		"kovan/Exponential.sol": {
+			"keccak256": "0xf6d6ed20e79083851436277b77546f76b8e4e766bde4fb50b3a6df84d678c44a",
 			"urls": [
-				"bzz-raw://5ed0994590216bbd9f0d491b52e88e3e4f5a8289dc39b2f6bd7d8e5325712e2b",
-				"dweb:/ipfs/QmWxgNShQyW5v8kVN14dLyLj73dUfRiumYnfwYACCxyXAv"
+				"bzz-raw://06b9be8fc5e32d85f9f24a24263c8f0ebcd55eeb8f1819e28b73c14e57c5a924",
+				"dweb:/ipfs/QmZcvEjxfgJsVNkYGnX2rdWjetSDMXjJkoAxkmU1AFGxLj"
 			]
 		},
-		"kovan/dETH/InterestRateModel.sol": {
-			"keccak256": "0x33bcb47447767fc45ae3c88983628df3b690161ecf00984a754c71d7d154bc8c",
+		"kovan/ExponentialNoError.sol": {
+			"keccak256": "0x9eb8ba07ab046b7035580d814fe1a8970b24d4fb70b2a1655d38a293caa0b304",
 			"urls": [
-				"bzz-raw://ca496ca02d0571c21d0a811725ee943b67771a990dbeb05a787c75fa4d160eb4",
-				"dweb:/ipfs/QmWUwP8oyFi3inxNBXq27K9KLJgvrHyfGMPzqfb5KbpxMW"
+				"bzz-raw://353c9eb669b73993e1d1500bb97e3a2c4a1ef4a198ecee232b824e313af1516d",
+				"dweb:/ipfs/QmNeHWqnDizHN7WYjFEwC65i2RFsKDuUyF5xTwrD5sPhnV"
+			]
+		},
+		"kovan/InterestRateModel.sol": {
+			"keccak256": "0x180ad506065b60a7a049c682040722119da7e9e91d28639f419d353169c65905",
+			"urls": [
+				"bzz-raw://97a0b743efc7d69f772fd8b7bfa0419b7b7a118ffeadb21d44f8e71734f7212d",
+				"dweb:/ipfs/QmSm7xEET7Ao6nz6Egrf8SgtfKw6FW7EkU6X6dQs2kGS46"
 			]
 		}
 	},

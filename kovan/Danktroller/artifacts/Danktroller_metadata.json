@@ -2458,7 +2458,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"Danktroller/Danktroller.sol": "Danktroller"
+			"kovan/Danktroller/Danktroller.sol": "Danktroller"
 		},
 		"evmVersion": "istanbul",
 		"libraries": {},
@@ -2469,105 +2469,105 @@
 		"remappings": []
 	},
 	"sources": {
-		"CarefulMath.sol": {
+		"kovan/CarefulMath.sol": {
 			"keccak256": "0x2bd26a739db38973ae3105de64ed75973769f6474434ae4902dbdf8a99e45cf2",
 			"urls": [
 				"bzz-raw://82d402cb231ac5ba205d3d99271882f36b5609880c69d12dd7bd9f62ca118bfd",
 				"dweb:/ipfs/QmUwv8qMgEGNG77cDAkYzBbBoZX6pqCKiAhTHM9UgiBcyF"
 			]
 		},
-		"DToken.sol": {
-			"keccak256": "0xaf36486fa879b4b693f79709809c456d9e637c1ea3c93c4b16c1dd62f844bfd5",
+		"kovan/DToken.sol": {
+			"keccak256": "0x19a944e7413df070d0acbdf7aac09a342b3314b7ce7ea7f5d09aa749f07ed753",
 			"urls": [
-				"bzz-raw://9d282c97508bf83099d9348a2e0fe37d36308595e66bab2df56b85fb8198d1e6",
-				"dweb:/ipfs/QmXrWky1EMVUD7VAN3THcfUtNG9RTnXBJV11SbRK51DY19"
+				"bzz-raw://924d02cbce495ae82b842de3f9c1047a9950af9680484ffd22b7932679c86712",
+				"dweb:/ipfs/QmZaLhjC4rBAwGXAKFZdtAARNXiFV9AfMRWjJRUtkJ1Nd2"
 			]
 		},
-		"DTokenInterfaces.sol": {
-			"keccak256": "0xc10528eb603336244c8a9f27859dc631a8ad620c5f6477d94a171e6bffa6c352",
+		"kovan/DTokenInterfaces.sol": {
+			"keccak256": "0xb3d16722d1bfd16d75e38e392060cf6cdef5673dfca83cfe5b7ee5c340dd71c3",
 			"urls": [
-				"bzz-raw://99d71643358dbdfed8422fbd8fab9293cbf025c64b604b668fdf980c35796dce",
-				"dweb:/ipfs/QmTU1rtQvARE6LaZKSQhVjnguARePGQadsyuQNiJwCSvQV"
+				"bzz-raw://7ed12c5d63dee82c0072f962051bdb87077ac1048cc64b21a63fadd5fb6e985b",
+				"dweb:/ipfs/QmYMLZc5UrD97K6Rxy13QbM5w8kaj1bxvFMp8wMGHrKaz2"
 			]
 		},
-		"Danktroller/Danktroller.sol": {
-			"keccak256": "0x01d7563cf3ade6016abb307ff4ffc970369641de102b5a4d709d3cb8641a8fb1",
+		"kovan/Danktroller/Danktroller.sol": {
+			"keccak256": "0x221448e3b1285f453942cc880366708be3fe30e69897a41bab1f7d311022402d",
 			"urls": [
-				"bzz-raw://91ef8cee6afbe6dabb983fb41022ac2832969f437eef573cc5bb877101313d48",
-				"dweb:/ipfs/QmTcU4oWhH1McKUEB164fKgwNcm2SPpkqfbbR1ydnzFuST"
+				"bzz-raw://c83518100cd126c3d2c6e8b7688e163841bda5280af882adf631ee44ec4dc608",
+				"dweb:/ipfs/Qmb7EgF7cddgfe8efEkzdaQZa42FVh6PU1VYh8utZZtEso"
 			]
 		},
-		"Danktroller/Unitroller.sol": {
+		"kovan/Danktroller/Unitroller.sol": {
 			"keccak256": "0x7bf7bcda115eb3ca797d123a44cb716ebf5dfa5f358dbb434bd3bbaf595cf202",
 			"urls": [
 				"bzz-raw://e7dc14cc2336d795ae7c3ff63b5d7fcab5afe81f29e0a5f9e44f0b4ec9f9d020",
 				"dweb:/ipfs/QmNjfAdnjzZHBqpuZswgNQtMokwa75rZPUN2hLtJrb5hjQ"
 			]
 		},
-		"DanktrollerInterface.sol": {
+		"kovan/DanktrollerInterface.sol": {
 			"keccak256": "0xa364c9d38317b2940abe0baa8bbd6d9b88175e679a2e95c06e0b7b5f8d13996c",
 			"urls": [
 				"bzz-raw://470dddc3128a76abc4426aed88aad84fe4090c84146886b4e08e24bca29e46e9",
 				"dweb:/ipfs/Qmei2YDz6x27HB7XWu4PuCbGcP7s7M8VPBeTBxLWKkHrhB"
 			]
 		},
-		"DanktrollerStorage.sol": {
+		"kovan/DanktrollerStorage.sol": {
 			"keccak256": "0x4885efbebabf7f133826aa1a680316021f9487e8d4f69be0d44b426d7f929455",
 			"urls": [
 				"bzz-raw://931a7c5e674095791d6f5641290aaa8ee3cc66d756ae8c8674daca9984075c10",
 				"dweb:/ipfs/QmedHH1gAwiB19tckrqKNnAxT3kNACwHCkB62sr7sp4F1M"
 			]
 		},
-		"EIP20Interface.sol": {
+		"kovan/EIP20Interface.sol": {
 			"keccak256": "0xd89723953595fe8d91f53737d4685a4e1e0f42576f569b1118dfb3d1c0fd5419",
 			"urls": [
 				"bzz-raw://209124060d3973a9731d343168d6ad0eaa226cc041d6e7dc95738ce1ca30f9c3",
 				"dweb:/ipfs/QmeWg82d4desJSbh9rzWZVkaJoRmD6b25MQmxbgfmYUpoq"
 			]
 		},
-		"EIP20NonStandardInterface.sol": {
+		"kovan/EIP20NonStandardInterface.sol": {
 			"keccak256": "0x234c4d9d37ba68e8e327951bbf9d8176b3daaa379abc9579f63eab00523be4f2",
 			"urls": [
 				"bzz-raw://15f8d45da762d8e16244cdc698b54400f585496fde6fe30a4c7dd0bbdd9b7e6a",
 				"dweb:/ipfs/QmQF4tXrtz6fpXyTe8rc1RdZoXmyvLiDxVfE5UntnpqEoq"
 			]
 		},
-		"ErrorReporter.sol": {
+		"kovan/ErrorReporter.sol": {
 			"keccak256": "0x695c2f7db5f48c2e1b31303211ad4e955f8b18aea2286ea1fcd2e7bdc3f98472",
 			"urls": [
 				"bzz-raw://12d2895d405d6197852bc53fc01231b9321931a123e26c1002d65f5eb981214a",
 				"dweb:/ipfs/QmcyFq1wJsZLUdeKXGBKcpNxQtAdRi4iamw3JdSLLqyZEz"
 			]
 		},
-		"Exponential.sol": {
+		"kovan/Exponential.sol": {
 			"keccak256": "0xf6d6ed20e79083851436277b77546f76b8e4e766bde4fb50b3a6df84d678c44a",
 			"urls": [
 				"bzz-raw://06b9be8fc5e32d85f9f24a24263c8f0ebcd55eeb8f1819e28b73c14e57c5a924",
 				"dweb:/ipfs/QmZcvEjxfgJsVNkYGnX2rdWjetSDMXjJkoAxkmU1AFGxLj"
 			]
 		},
-		"ExponentialNoError.sol": {
+		"kovan/ExponentialNoError.sol": {
 			"keccak256": "0x9eb8ba07ab046b7035580d814fe1a8970b24d4fb70b2a1655d38a293caa0b304",
 			"urls": [
 				"bzz-raw://353c9eb669b73993e1d1500bb97e3a2c4a1ef4a198ecee232b824e313af1516d",
 				"dweb:/ipfs/QmNeHWqnDizHN7WYjFEwC65i2RFsKDuUyF5xTwrD5sPhnV"
 			]
 		},
-		"Governance/Dank.sol": {
+		"kovan/Governance/Dank.sol": {
 			"keccak256": "0xacbb0fc39308b0977d960b18a21b591dcc2b96e7a14522743e9efb23effeff29",
 			"urls": [
 				"bzz-raw://48df94f4150bdd6f786fc6f69f625e5de756459f6e5cbd65dc3f155c858573da",
 				"dweb:/ipfs/QmTfQoCe1cfB3LCgP3NzmhzMgxP5WCw9cWiQhiLQbSXLSZ"
 			]
 		},
-		"InterestRateModel.sol": {
+		"kovan/InterestRateModel.sol": {
 			"keccak256": "0x180ad506065b60a7a049c682040722119da7e9e91d28639f419d353169c65905",
 			"urls": [
 				"bzz-raw://97a0b743efc7d69f772fd8b7bfa0419b7b7a118ffeadb21d44f8e71734f7212d",
 				"dweb:/ipfs/QmSm7xEET7Ao6nz6Egrf8SgtfKw6FW7EkU6X6dQs2kGS46"
 			]
 		},
-		"PriceOracle.sol": {
+		"kovan/PriceOracle.sol": {
 			"keccak256": "0x764382e52cbe3f18490fb8251774cf4869d681de2d2c27d991724701f1a11a47",
 			"urls": [
 				"bzz-raw://bb6d7302a392f6f82104a667438d7324ac0ac616a90709eff30b09d5de491d56",

@@ -3,7 +3,7 @@ pragma solidity ^0.5.16;
 import "./DanktrollerInterface.sol";
 import "./DTokenInterfaces.sol";
 import "./ErrorReporter.sol";
-import "../Exponential.sol";
+import "./Exponential.sol";
 import "./EIP20Interface.sol";
 import "./InterestRateModel.sol";
 
