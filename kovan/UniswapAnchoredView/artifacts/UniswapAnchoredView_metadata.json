@@ -1,6 +1,6 @@
 {
 	"compiler": {
-		"version": "0.6.10+commit.00c0fcaf"
+		"version": "0.6.12+commit.27d51765"
 	},
 	"language": "Solidity",
 	"output": {
@@ -829,6 +829,7 @@
 			}
 		],
 		"devdoc": {
+			"kind": "dev",
 			"methods": {
 				"constructor": {
 					"details": "Note that to avoid immature TWAPs, the system must run for at least a single anchorPeriod before using.",
@@ -922,9 +923,28 @@
 						"_0": "The source address which signed the message, presumably"
 					}
 				}
-			}
+			},
+			"version": 1
 		},
 		"userdoc": {
+			"events": {
+				"AnchorPriceUpdated(string,uint256,uint256,uint256)": {
+					"notice": "The event emitted when anchor price is updated"
+				},
+				"PriceGuarded(string,uint256,uint256)": {
+					"notice": "The event emitted when new prices are posted but the stored price is not updated due to the anchor"
+				},
+				"PriceUpdated(string,uint256)": {
+					"notice": "The event emitted when the stored price is updated"
+				},
+				"ReporterInvalidated(address)": {
+					"notice": "The event emitted when reporter invalidates itself"
+				},
+				"UniswapWindowUpdated(bytes32,uint256,uint256,uint256,uint256)": {
+					"notice": "The event emitted when the uniswap window changes"
+				}
+			},
+			"kind": "user",
 			"methods": {
 				"anchorPeriod()": {
 					"notice": "The minimum amount of time in seconds required for the old uniswap price accumulator to be replaced"
@@ -996,7 +1016,8 @@
 				"upperBoundAnchorRatio()": {
 					"notice": "The highest ratio of the new price to the anchor price that will still trigger the price to be updated"
 				}
-			}
+			},
+			"version": 1
 		}
 	},
 	"settings": {

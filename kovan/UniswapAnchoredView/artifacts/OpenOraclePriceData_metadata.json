@@ -1,6 +1,6 @@
 {
 	"compiler": {
-		"version": "0.6.10+commit.00c0fcaf"
+		"version": "0.6.12+commit.27d51765"
 	},
 	"language": "Solidity",
 	"output": {
@@ -165,6 +165,7 @@
 		],
 		"devdoc": {
 			"author": "Decentralized-Bank Labs, Inc.",
+			"kind": "dev",
 			"methods": {
 				"get(address,string)": {
 					"params": {
@@ -209,9 +210,19 @@
 					"details": "The most recent authenticated data from all sources.  This is private because dynamic mapping keys preclude auto-generated getters."
 				}
 			},
-			"title": "The Open Oracle Price Data Contract"
+			"title": "The Open Oracle Price Data Contract",
+			"version": 1
 		},
 		"userdoc": {
+			"events": {
+				"NotWritten(uint64,uint256,uint256)": {
+					"notice": "The event emitted when the timestamp on a price is invalid and it is not written to storage"
+				},
+				"Write(address,string,uint64,uint64)": {
+					"notice": "The event emitted when a source writes to its storage"
+				}
+			},
+			"kind": "user",
 			"methods": {
 				"get(address,string)": {
 					"notice": "Read a single key from an authenticated source"
@@ -226,7 +237,8 @@
 					"notice": "Recovers the source address which signed a message"
 				}
 			},
-			"notice": "Values stored in this contract should represent a USD price with 6 decimals precision"
+			"notice": "Values stored in this contract should represent a USD price with 6 decimals precision",
+			"version": 1
 		}
 	},
 	"settings": {

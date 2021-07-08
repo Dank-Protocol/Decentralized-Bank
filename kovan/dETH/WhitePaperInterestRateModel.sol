@@ -1,5 +1,5 @@
 pragma solidity ^0.5.16;
-//CETHER
+//DETHER
 //Arg [0] : baseRatePerYear (uint256): 20000000000000000
 //Arg [1] : multiplierPerYear (uint256): 100000000000000000
 //WBTC

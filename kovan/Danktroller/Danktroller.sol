@@ -405,9 +405,9 @@ contract Danktroller is DanktrollerV4Storage, DanktrollerInterface, DanktrollerE
         borrowAmount;
 
         // Shh - we don't ever want this hook to be marked pure
-        if (false) {
-            maxAssets = maxAssets;
-        }
+//        if (false) {
+//            maxAssets = maxAssets;
+//        }
     }
 
     /**
@@ -461,9 +461,9 @@ contract Danktroller is DanktrollerV4Storage, DanktrollerInterface, DanktrollerE
         borrowerIndex;
 
         // Shh - we don't ever want this hook to be marked pure
-        if (false) {
-            maxAssets = maxAssets;
-        }
+//        if (false) {
+//            maxAssets = maxAssets;
+//        }
     }
 
     /**
@@ -533,9 +533,9 @@ contract Danktroller is DanktrollerV4Storage, DanktrollerInterface, DanktrollerE
         seizeTokens;
 
         // Shh - we don't ever want this hook to be marked pure
-        if (false) {
-            maxAssets = maxAssets;
-        }
+//        if (false) {
+//            maxAssets = maxAssets;
+//        }
     }
 
     /**
@@ -596,9 +596,9 @@ contract Danktroller is DanktrollerV4Storage, DanktrollerInterface, DanktrollerE
         seizeTokens;
 
         // Shh - we don't ever want this hook to be marked pure
-        if (false) {
-            maxAssets = maxAssets;
-        }
+//        if (false) {
+//            maxAssets = maxAssets;
+//        }
     }
 
     /**
@@ -643,9 +643,9 @@ contract Danktroller is DanktrollerV4Storage, DanktrollerInterface, DanktrollerE
         transferTokens;
 
         // Shh - we don't ever want this hook to be marked pure
-        if (false) {
-            maxAssets = maxAssets;
-        }
+//        if (false) {
+//            maxAssets = maxAssets;
+//        }
     }
 
     /*** Liquidity/Liquidation Calculations ***/
@@ -1082,7 +1082,7 @@ contract Danktroller is DanktrollerV4Storage, DanktrollerInterface, DanktrollerE
     function _setMintPaused(DToken dToken, bool state) public returns (bool) {
         require(markets[address(dToken)].isListed, "cannot pause a market that is not listed");
         require(msg.sender == pauseGuardian || msg.sender == admin, "only pause guardian and admin can pause");
-        require(msg.sender == admin || state == true, "only admin can unpause");
+        require(msg.sender == admin || state, "only admin can unpause");
 
         mintGuardianPaused[address(dToken)] = state;
         emit ActionPaused(dToken, "Mint", state);
@@ -1092,7 +1092,7 @@ contract Danktroller is DanktrollerV4Storage, DanktrollerInterface, DanktrollerE
     function _setBorrowPaused(DToken dToken, bool state) public returns (bool) {
         require(markets[address(dToken)].isListed, "cannot pause a market that is not listed");
         require(msg.sender == pauseGuardian || msg.sender == admin, "only pause guardian and admin can pause");
-        require(msg.sender == admin || state == true, "only admin can unpause");
+        require(msg.sender == admin || state, "only admin can unpause");
 
         borrowGuardianPaused[address(dToken)] = state;
         emit ActionPaused(dToken, "Borrow", state);
@@ -1101,7 +1101,7 @@ contract Danktroller is DanktrollerV4Storage, DanktrollerInterface, DanktrollerE
 
     function _setTransferPaused(bool state) public returns (bool) {
         require(msg.sender == pauseGuardian || msg.sender == admin, "only pause guardian and admin can pause");
-        require(msg.sender == admin || state == true, "only admin can unpause");
+        require(msg.sender == admin || state, "only admin can unpause");
 
         transferGuardianPaused = state;
         emit ActionPaused("Transfer", state);
@@ -1110,7 +1110,7 @@ contract Danktroller is DanktrollerV4Storage, DanktrollerInterface, DanktrollerE
 
     function _setSeizePaused(bool state) public returns (bool) {
         require(msg.sender == pauseGuardian || msg.sender == admin, "only pause guardian and admin can pause");
-        require(msg.sender == admin || state == true, "only admin can unpause");
+        require(msg.sender == admin || state, "only admin can unpause");
 
         seizeGuardianPaused = state;
         emit ActionPaused("Seize", state);
@@ -1319,14 +1319,14 @@ contract Danktroller is DanktrollerV4Storage, DanktrollerInterface, DanktrollerE
         for (uint i = 0; i < dTokens.length; i++) {
             DToken dToken = dTokens[i];
             require(markets[address(dToken)].isListed, "market must be listed");
-            if (borrowers == true) {
+            if (borrowers) {
                 Exp memory borrowIndex = Exp({mantissa: dToken.borrowIndex()});
                 updateDankBorrowIndex(address(dToken), borrowIndex);
                 for (uint j = 0; j < holders.length; j++) {
                     distributeBorrowerDank(address(dToken), holders[j], borrowIndex, true);
                 }
             }
-            if (suppliers == true) {
+            if (suppliers) {
                 updateDankSupplyIndex(address(dToken));
                 for (uint j = 0; j < holders.length; j++) {
                     distributeSupplierDank(address(dToken), holders[j], true);
@@ -1367,7 +1367,7 @@ contract Danktroller is DanktrollerV4Storage, DanktrollerInterface, DanktrollerE
 
     function _addDankMarketInternal(address dToken) internal {
         Market storage market = markets[dToken];
-        require(market.isListed == true, "dank market is not listed");
+        require(market.isListed, "dank market is not listed");
         require(market.isDanked == false, "dank market already added");
 
         market.isDanked = true;
@@ -1396,7 +1396,7 @@ contract Danktroller is DanktrollerV4Storage, DanktrollerInterface, DanktrollerE
         require(msg.sender == admin, "only admin can drop dank market");
 
         Market storage market = markets[dToken];
-        require(market.isDanked == true, "market is not a dank market");
+        require(market.isDanked, "market is not a dank market");
 
         market.isDanked = false;
         emit MarketDanked(DToken(dToken), false);

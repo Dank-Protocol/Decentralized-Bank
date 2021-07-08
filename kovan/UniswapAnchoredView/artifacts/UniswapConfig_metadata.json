@@ -1,6 +1,6 @@
 {
 	"compiler": {
-		"version": "0.6.10+commit.00c0fcaf"
+		"version": "0.6.12+commit.27d51765"
 	},
 	"language": "Solidity",
 	"output": {
@@ -410,6 +410,7 @@
 			}
 		],
 		"devdoc": {
+			"kind": "dev",
 			"methods": {
 				"constructor": {
 					"params": {
@@ -462,9 +463,11 @@
 				"maxTokens": {
 					"details": "Do not change this variable without updating all the fields throughout the contract."
 				}
-			}
+			},
+			"version": 1
 		},
 		"userdoc": {
+			"kind": "user",
 			"methods": {
 				"constructor": "Construct an immutable store of configs into the contract data",
 				"getTokenConfig(uint256)": {
@@ -488,7 +491,8 @@
 				"numTokens()": {
 					"notice": "The number of tokens this contract actually supports"
 				}
-			}
+			},
+			"version": 1
 		}
 	},
 	"settings": {

@@ -1,6 +1,6 @@
 {
 	"compiler": {
-		"version": "0.6.10+commit.00c0fcaf"
+		"version": "0.6.12+commit.27d51765"
 	},
 	"language": "Solidity",
 	"output": {
@@ -32,6 +32,7 @@
 		],
 		"devdoc": {
 			"author": "Decentralized-Bank Labs, Inc.",
+			"kind": "dev",
 			"methods": {
 				"source(bytes,bytes)": {
 					"details": "Dankaring to a claimed address would add nothing,  as the caller could simply perform the recover and claim that address.",
@@ -44,14 +45,17 @@
 					}
 				}
 			},
-			"title": "The Open Oracle Data Base Contract"
+			"title": "The Open Oracle Data Base Contract",
+			"version": 1
 		},
 		"userdoc": {
+			"kind": "user",
 			"methods": {
 				"source(bytes,bytes)": {
 					"notice": "Recovers the source address which signed a message"
 				}
-			}
+			},
+			"version": 1
 		}
 	},
 	"settings": {
