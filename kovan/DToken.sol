@@ -79,7 +79,7 @@ contract DToken is DTokenInterface, Exponential, TokenErrorReporter {
         /* Get the allowance, infinite for the account owner */
         uint startingAllowance = 0;
         if (spender == src) {
-            startingAllowance = uint(-1);
+            startingAllowance = uint(- 1);
         } else {
             startingAllowance = transferAllowances[src][spender];
         }
@@ -113,15 +113,15 @@ contract DToken is DTokenInterface, Exponential, TokenErrorReporter {
         accountTokens[dst] = dstTokensNew;
 
         /* Eat some of the allowance (if necessary) */
-        if (startingAllowance != uint(-1)) {
+        if (startingAllowance != uint(- 1)) {
             transferAllowances[src][spender] = allowanceNew;
         }
 
         /* We emit a Transfer event */
         emit Transfer(src, dst, tokens);
 
-        // unused function
-        // danktroller.transferVerify(address(this), src, dst, tokens);
+        // unused function  // TODO  主网使用了这个函数
+        danktroller.transferVerify(address(this), src, dst, tokens);
 
         return uint(Error.NO_ERROR);
     }
@@ -188,7 +188,7 @@ contract DToken is DTokenInterface, Exponential, TokenErrorReporter {
      * @return The amount of underlying owned by `owner`
      */
     function balanceOfUnderlying(address owner) external returns (uint) {
-        Exp memory exchangeRate = Exp({mantissa: exchangeRateCurrent()});
+        Exp memory exchangeRate = Exp({mantissa : exchangeRateCurrent()});
         (MathError mErr, uint balance) = mulScalarTruncate(exchangeRate, accountTokens[owner]);
         require(mErr == MathError.NO_ERROR, "balance could not be calculated");
         return balance;
@@ -229,7 +229,7 @@ contract DToken is DTokenInterface, Exponential, TokenErrorReporter {
     }
 
     /**
-     * @notice Returns the current per-block borrow interest rate for this dToken
+     * @notice Returns the current per-block borrow interest rate for this cToken
      * @return The borrow interest rate per block, scaled by 1e18
      */
     function borrowRatePerBlock() external view returns (uint) {
@@ -237,7 +237,7 @@ contract DToken is DTokenInterface, Exponential, TokenErrorReporter {
     }
 
     /**
-     * @notice Returns the current per-block supply interest rate for this dToken
+     * @notice Returns the current per-block supply interest rate for this cToken
      * @return The supply interest rate per block, scaled by 1e18
      */
     function supplyRatePerBlock() external view returns (uint) {
@@ -376,6 +376,27 @@ contract DToken is DTokenInterface, Exponential, TokenErrorReporter {
         return getCashPrior();
     }
 
+    struct AccrueInterestLocalVars {
+        MathError mathErr;
+        uint opaqueErr;
+        uint borrowRateMantissa;
+        uint currentBlockNumber;
+        uint blockDelta;
+
+        Exp simpleInterestFactor;
+
+        uint interestAccumulated;
+        uint totalBorrowsNew;
+        uint totalReservesNew;
+        uint borrowIndexNew;
+    }
+
+    /**
+     * @notice Applies accrued interest to total borrows and reserves
+     * @dev This calculates interest accrued from the last checkpointed block
+     *   up to the current block and writes new checkpoint to storage.
+     */
+
     /**
      * @notice Applies accrued interest to total borrows and reserves
      * @dev This calculates interest accrued from the last checkpointed block
@@ -420,7 +441,7 @@ contract DToken is DTokenInterface, Exponential, TokenErrorReporter {
         uint totalReservesNew;
         uint borrowIndexNew;
 
-        (mathErr, simpleInterestFactor) = mulScalar(Exp({mantissa: borrowRateMantissa}), blockDelta);
+        (mathErr, simpleInterestFactor) = mulScalar(Exp({mantissa : borrowRateMantissa}), blockDelta);
         if (mathErr != MathError.NO_ERROR) {
             return failOpaque(Error.MATH_ERROR, FailureInfo.ACCRUE_INTEREST_SIMPLE_INTEREST_FACTOR_CALCULATION_FAILED, uint(mathErr));
         }
@@ -435,7 +456,7 @@ contract DToken is DTokenInterface, Exponential, TokenErrorReporter {
             return failOpaque(Error.MATH_ERROR, FailureInfo.ACCRUE_INTEREST_NEW_TOTAL_BORROWS_CALCULATION_FAILED, uint(mathErr));
         }
 
-        (mathErr, totalReservesNew) = mulScalarTruncateAddUInt(Exp({mantissa: reserveFactorMantissa}), interestAccumulated, reservesPrior);
+        (mathErr, totalReservesNew) = mulScalarTruncateAddUInt(Exp({mantissa : reserveFactorMantissa}), interestAccumulated, reservesPrior);
         if (mathErr != MathError.NO_ERROR) {
             return failOpaque(Error.MATH_ERROR, FailureInfo.ACCRUE_INTEREST_NEW_TOTAL_RESERVES_CALCULATION_FAILED, uint(mathErr));
         }
@@ -532,7 +553,7 @@ contract DToken is DTokenInterface, Exponential, TokenErrorReporter {
          *  mintTokens = actualMintAmount / exchangeRate
          */
 
-        (vars.mathErr, vars.mintTokens) = divScalarByExpTruncate(vars.actualMintAmount, Exp({mantissa: vars.exchangeRateMantissa}));
+        (vars.mathErr, vars.mintTokens) = divScalarByExpTruncate(vars.actualMintAmount, Exp({mantissa : vars.exchangeRateMantissa}));
         require(vars.mathErr == MathError.NO_ERROR, "MINT_EXCHANGE_CALCULATION_FAILED");
 
         /*
@@ -555,8 +576,8 @@ contract DToken is DTokenInterface, Exponential, TokenErrorReporter {
         emit Transfer(address(this), minter, vars.mintTokens);
 
         /* We call the defense hook */
-        // unused function
-        // danktroller.mintVerify(address(this), minter, vars.actualMintAmount, vars.mintTokens);
+        // unused function  // TODO 主网使用了这个函数
+        danktroller.mintVerify(address(this), minter, vars.actualMintAmount, vars.mintTokens);
 
         return (uint(Error.NO_ERROR), vars.actualMintAmount);
     }
@@ -631,7 +652,7 @@ contract DToken is DTokenInterface, Exponential, TokenErrorReporter {
              */
             vars.redeemTokens = redeemTokensIn;
 
-            (vars.mathErr, vars.redeemAmount) = mulScalarTruncate(Exp({mantissa: vars.exchangeRateMantissa}), redeemTokensIn);
+            (vars.mathErr, vars.redeemAmount) = mulScalarTruncate(Exp({mantissa : vars.exchangeRateMantissa}), redeemTokensIn);
             if (vars.mathErr != MathError.NO_ERROR) {
                 return failOpaque(Error.MATH_ERROR, FailureInfo.REDEEM_EXCHANGE_TOKENS_CALCULATION_FAILED, uint(vars.mathErr));
             }
@@ -642,7 +663,7 @@ contract DToken is DTokenInterface, Exponential, TokenErrorReporter {
              *  redeemAmount = redeemAmountIn
              */
 
-            (vars.mathErr, vars.redeemTokens) = divScalarByExpTruncate(redeemAmountIn, Exp({mantissa: vars.exchangeRateMantissa}));
+            (vars.mathErr, vars.redeemTokens) = divScalarByExpTruncate(redeemAmountIn, Exp({mantissa : vars.exchangeRateMantissa}));
             if (vars.mathErr != MathError.NO_ERROR) {
                 return failOpaque(Error.MATH_ERROR, FailureInfo.REDEEM_EXCHANGE_AMOUNT_CALCULATION_FAILED, uint(vars.mathErr));
             }
@@ -794,8 +815,8 @@ contract DToken is DTokenInterface, Exponential, TokenErrorReporter {
         emit Borrow(borrower, borrowAmount, vars.accountBorrowsNew, vars.totalBorrowsNew);
 
         /* We call the defense hook */
-        // unused function
-        // danktroller.borrowVerify(address(this), borrower, borrowAmount);
+        // unused function  // TODO 主网使用了这个函数
+        danktroller.borrowVerify(address(this), borrower, borrowAmount);
 
         return uint(Error.NO_ERROR);
     }
@@ -873,7 +894,7 @@ contract DToken is DTokenInterface, Exponential, TokenErrorReporter {
         }
 
         /* If repayAmount == -1, repayAmount = accountBorrows */
-        if (repayAmount == uint(-1)) {
+        if (repayAmount == uint(- 1)) {
             vars.repayAmount = vars.accountBorrows;
         } else {
             vars.repayAmount = repayAmount;
@@ -912,8 +933,8 @@ contract DToken is DTokenInterface, Exponential, TokenErrorReporter {
         emit RepayBorrow(payer, borrower, vars.actualRepayAmount, vars.accountBorrowsNew, vars.totalBorrowsNew);
 
         /* We call the defense hook */
-        // unused function
-        // danktroller.repayBorrowVerify(address(this), payer, borrower, vars.actualRepayAmount, vars.borrowerIndex);
+        // unused function  // TODO  主网使用了这个函数
+        danktroller.repayBorrowVerify(address(this), payer, borrower, vars.actualRepayAmount, vars.borrowerIndex);
 
         return (uint(Error.NO_ERROR), vars.actualRepayAmount);
     }
@@ -980,7 +1001,7 @@ contract DToken is DTokenInterface, Exponential, TokenErrorReporter {
         }
 
         /* Fail if repayAmount = -1 */
-        if (repayAmount == uint(-1)) {
+        if (repayAmount == uint(- 1)) {
             return (fail(Error.INVALID_CLOSE_AMOUNT_REQUESTED, FailureInfo.LIQUIDATE_CLOSE_AMOUNT_IS_UINT_MAX), 0);
         }
 
@@ -1017,8 +1038,8 @@ contract DToken is DTokenInterface, Exponential, TokenErrorReporter {
         emit LiquidateBorrow(liquidator, borrower, actualRepayAmount, address(dTokenCollateral), seizeTokens);
 
         /* We call the defense hook */
-        // unused function
-        // danktroller.liquidateBorrowVerify(address(this), address(dTokenCollateral), liquidator, borrower, actualRepayAmount, seizeTokens);
+        // unused function  // TODO 主网使用了这个函数
+        danktroller.liquidateBorrowVerify(address(this), address(dTokenCollateral), liquidator, borrower, actualRepayAmount, seizeTokens);
 
         return (uint(Error.NO_ERROR), actualRepayAmount);
     }
@@ -1089,8 +1110,8 @@ contract DToken is DTokenInterface, Exponential, TokenErrorReporter {
         emit Transfer(borrower, liquidator, seizeTokens);
 
         /* We call the defense hook */
-        // unused function
-        // danktroller.seizeVerify(address(this), seizerToken, liquidator, borrower, seizeTokens);
+        // unused function  // TODO  主网使用了这个函数
+        danktroller.seizeVerify(address(this), seizerToken, liquidator, borrower, seizeTokens);
 
         return uint(Error.NO_ERROR);
     }
@@ -1230,7 +1251,7 @@ contract DToken is DTokenInterface, Exponential, TokenErrorReporter {
         }
 
         // _addReservesFresh emits reserve-addition-specific logs on errors, so we don't need to.
-        (error, ) = _addReservesFresh(addAmount);
+        (error,) = _addReservesFresh(addAmount);
         return error;
     }
 
@@ -1428,6 +1449,7 @@ contract DToken is DTokenInterface, Exponential, TokenErrorReporter {
         require(_notEntered, "re-entered");
         _notEntered = false;
         _;
-        _notEntered = true; // get a gas-refund post-Istanbul
+        _notEntered = true;
+        // get a gas-refund post-Istanbul
     }
 }

@@ -121,6 +121,7 @@ contract DTokenInterface is DTokenStorage {
     /**
      * @notice Indicator that this is a DToken contract (for inspection)
      */
+    //TODO unuse   主网没有这个参数
     bool public constant isDToken = true;
 
 
@@ -259,7 +260,8 @@ contract DErc20Interface is DErc20Storage {
     function repayBorrow(uint repayAmount) external returns (uint);
     function repayBorrowBehalf(address borrower, uint repayAmount) external returns (uint);
     function liquidateBorrow(address borrower, uint repayAmount, DTokenInterface dTokenCollateral) external returns (uint);
-    function sweepToken(EIP20NonStandardInterface token) external;
+    //TODO  这个函数和主网不一样,主网没有这个函数,需要确定函数的作用
+//    function sweepToken(EIP20NonStandardInterface token) external;
 
 
     /*** Admin Functions ***/
@@ -290,6 +292,36 @@ contract DDelegationStoragegatorInterface is DDelegationStorage {
 }
 
 contract DDelegationStoragegateInterface is DDelegationStorage {
+    /**
+     * @notice Called by the delegator on a delegate to initialize it for duty
+     * @dev Should revert if any issues arise which make it unfit for delegation
+     * @param data The encoded bytes data for any initialization
+     */
+    function _becomeImplementation(bytes memory data) public;
+
+    /**
+     * @notice Called by the delegator on a delegate to forfeit its responsibility
+     */
+    function _resignImplementation() public;
+}
+
+
+contract DDelegatorInterface is DDelegationStorage {
+    /**
+     * @notice Emitted when implementation is changed
+     */
+    event NewImplementation(address oldImplementation, address newImplementation);
+
+    /**
+     * @notice Called by the admin to update the implementation of the delegator
+     * @param implementation_ The address of the new implementation for delegation
+     * @param allowResign Flag to indicate whether to call _resignImplementation on the old implementation
+     * @param becomeImplementationData The encoded bytes data to be passed to _becomeImplementation
+     */
+    function _setImplementation(address implementation_, bool allowResign, bytes memory becomeImplementationData) public;
+}
+
+contract DDelegateInterface is DDelegationStorage {
     /**
      * @notice Called by the delegator on a delegate to initialize it for duty
      * @dev Should revert if any issues arise which make it unfit for delegation

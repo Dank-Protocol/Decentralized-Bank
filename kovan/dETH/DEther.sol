@@ -5,7 +5,6 @@ pragma solidity ^0.5.16;
 //Arg [3] : name_ (string): Dank ETH
 //Arg [4] : symbol_ (string): dETH
 //Arg [5] : decimals_ (uint8): 8
-//Arg [6] : admin_ (address): 0xa776184fd6f545dae5f51361dbcc9018549a9749
 
 import "../DToken.sol";
 
@@ -23,22 +22,18 @@ contract DEther is DToken {
      * @param name_ ERC-20 name of this token
      * @param symbol_ ERC-20 symbol of this token
      * @param decimals_ ERC-20 decimal precision of this token
-     * @param admin_ Address of the administrator of this token
      */
     constructor(DanktrollerInterface danktroller_,
         InterestRateModel interestRateModel_,
         uint initialExchangeRateMantissa_,
         string memory name_,
         string memory symbol_,
-        uint8 decimals_,
-        address payable admin_) public {
+        uint8 decimals_) public {
         // Creator of the contract is admin during initialization
         admin = msg.sender;
 
         initialize(danktroller_, interestRateModel_, initialExchangeRateMantissa_, name_, symbol_, decimals_);
 
-        // Set the proper admin now that initialization is done
-        admin = admin_;
     }
 
 

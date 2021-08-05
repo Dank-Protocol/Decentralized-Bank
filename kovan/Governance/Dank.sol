@@ -1,7 +1,10 @@
 pragma solidity ^0.5.16;
 pragma experimental ABIEncoderV2;
 
+import "../SafeMath.sol";
+
 contract Dank {
+    using SafeMath for uint;
     /// @notice EIP-20 token name for this token
     string public constant name = "Decentralized-Bank";
 
@@ -12,16 +15,20 @@ contract Dank {
     uint8 public constant decimals = 18;
 
     /// @notice Total number of tokens in circulation
-    uint public constant totalSupply = 10000000e18; // 10 million Dank
+    uint public constant maxTotalSupply = 40000000e18; // 10 million Dank
+    //    uint totalSupply = 0; // default zero Dank
+    uint public startBlock = block.number;
+    uint public currBlock = block.number;
+    uint public constant perBlockMint = 50e18;
 
     /// @notice Allowance amounts on behalf of others
-    mapping (address => mapping (address => uint96)) internal allowances;
+    mapping(address => mapping(address => uint96)) internal allowances;
 
     /// @notice Official record of token balances for each account
-    mapping (address => uint96) internal balances;
+    mapping(address => uint96) internal balances;
 
     /// @notice A record of each accounts delegate
-    mapping (address => address) public delegates;
+    mapping(address => address) public delegates;
 
     /// @notice A checkpoint for marking number of votes from a given block
     struct Checkpoint {
@@ -30,10 +37,10 @@ contract Dank {
     }
 
     /// @notice A record of votes checkpoints for each account, by index
-    mapping (address => mapping (uint32 => Checkpoint)) public checkpoints;
+    mapping(address => mapping(uint32 => Checkpoint)) public checkpoints;
 
     /// @notice The number of checkpoints for each account
-    mapping (address => uint32) public numCheckpoints;
+    mapping(address => uint32) public numCheckpoints;
 
     /// @notice The EIP-712 typehash for the contract's domain
     bytes32 public constant DOMAIN_TYPEHASH = keccak256("EIP712Domain(string name,uint256 chainId,address verifyingContract)");
@@ -42,7 +49,7 @@ contract Dank {
     bytes32 public constant DELEGATION_TYPEHASH = keccak256("Delegation(address delegatee,uint256 nonce,uint256 expiry)");
 
     /// @notice A record of states for signing / validating signatures
-    mapping (address => uint) public nonces;
+    mapping(address => uint) public nonces;
 
     /// @notice An event thats emitted when an account changes its delegate
     event DelegateChanged(address indexed delegator, address indexed fromDelegate, address indexed toDelegate);
@@ -58,11 +65,9 @@ contract Dank {
 
     /**
      * @notice Construct a new Dank token
-     * @param account The initial account to grant all the tokens
      */
-    constructor(address account) public {
-        balances[account] = uint96(totalSupply);
-        emit Transfer(address(0), account, totalSupply);
+    constructor() public {
+        ownerAddr = msg.sender;
     }
 
     /**
@@ -85,8 +90,8 @@ contract Dank {
      */
     function approve(address spender, uint rawAmount) external returns (bool) {
         uint96 amount;
-        if (rawAmount == uint(-1)) {
-            amount = uint96(-1);
+        if (rawAmount == uint(- 1)) {
+            amount = uint96(- 1);
         } else {
             amount = safe96(rawAmount, "Dank::approve: amount exceeds 96 bits");
         }
@@ -102,8 +107,39 @@ contract Dank {
      * @param account The address of the account to get the balance of
      * @return The number of tokens held
      */
-    function balanceOf(address account) external view returns (uint) {
+    function balanceOfHold(address account) public view returns (uint) {
+        block.number;
         return balances[account];
+    }
+
+    function balanceOf(address account) external view returns (uint) {
+        uint diffBlock = block.number.sub(currBlock);
+        if (isMaxBlock() || !isCurrInnerContract(account)) {
+            return balances[account];
+        } else {
+            uint balance = balances[account];
+            uint diffAmount = diffBlock.mul(perBlockMint);
+            uint maltAmount = diffAmount.mul(5).div(10);
+            return balance.add(maltAmount);
+        }
+    }
+
+    function isMaxBlock() public view returns (bool) {
+        uint curTotalSupply = totalSupply();
+        return curTotalSupply == maxTotalSupply;
+    }
+    /**
+    * 这里根据条件动态产生预挖值
+    */
+    function totalSupply() public view returns (uint) {
+        uint diffBlock = block.number.sub(startBlock);
+        uint totalSupplyRet = diffBlock.mul(perBlockMint);
+
+        if (totalSupplyRet >= maxTotalSupply) {
+            totalSupplyRet = maxTotalSupply;
+        }
+
+        return totalSupplyRet;
     }
 
     /**
@@ -130,7 +166,7 @@ contract Dank {
         uint96 spenderAllowance = allowances[src][spender];
         uint96 amount = safe96(rawAmount, "Dank::approve: amount exceeds 96 bits");
 
-        if (spender != src && spenderAllowance != uint96(-1)) {
+        if (spender != src && spenderAllowance != uint96(- 1)) {
             uint96 newAllowance = sub96(spenderAllowance, amount, "Dank::transferFrom: transfer amount exceeds spender allowance");
             allowances[src][spender] = newAllowance;
 
@@ -138,6 +174,20 @@ contract Dank {
         }
 
         _transferTokens(src, dst, amount);
+        return true;
+    }
+
+    function isCurrInnerContract(address inAddress) public view returns (bool) {
+        address danktroller = getDanktrollerAddress();
+        return inAddress == ownerAddr || danktroller == inAddress;
+    }
+
+    function getDanktrollerAddress() public view returns (address) {
+        return danktrollerAddr;
+    }
+
+    function setDanktrollerAddress(address _danktrollerAddr) external onlyOwner() returns (bool)  {
+        danktrollerAddr = _danktrollerAddr;
         return true;
     }
 
@@ -207,7 +257,8 @@ contract Dank {
         uint32 lower = 0;
         uint32 upper = nCheckpoints - 1;
         while (upper > lower) {
-            uint32 center = upper - (upper - lower) / 2; // ceil, avoiding overflow
+            uint32 center = upper - (upper - lower) / 2;
+            // ceil, avoiding overflow
             Checkpoint memory cp = checkpoints[account][center];
             if (cp.fromBlock == blockNumber) {
                 return cp.votes;
@@ -221,6 +272,21 @@ contract Dank {
     }
 
     function _delegate(address delegator, address delegatee) internal {
+
+        //这里也要进行余额处理
+        //这里首先将已挖矿,未分配的金额分配给指定账户
+        uint diffBlock = block.number.sub(currBlock);
+        if (diffBlock > 0) {
+            uint diffAmount = diffBlock.mul(perBlockMint);
+            //这里将资金分两批0.5 分配给指定账户
+            uint maltAmount = diffAmount.mul(5).div(10);
+            uint balanceDanktroller = balanceOfHold(getDanktrollerAddress()).add(maltAmount);
+            balances[getDanktrollerAddress()] = safe96(balanceDanktroller, "Dank:_delegate: amount exceeds 96 bits");
+            balances[ownerAddr] = safe96(balanceOfHold(ownerAddr).add(maltAmount), "Dank:_delegate: amount exceeds 96 bits");
+
+            currBlock = block.number;
+        }
+
         address currentDelegate = delegates[delegator];
         uint96 delegatorBalance = balances[delegator];
         delegates[delegator] = delegatee;
@@ -233,6 +299,19 @@ contract Dank {
     function _transferTokens(address src, address dst, uint96 amount) internal {
         require(src != address(0), "Dank::_transferTokens: cannot transfer from the zero address");
         require(dst != address(0), "Dank::_transferTokens: cannot transfer to the zero address");
+
+        //这里首先将已挖矿,未分配的金额分配给指定账户
+        uint diffBlock = block.number.sub(currBlock);
+        if (diffBlock > 0) {
+            uint diffAmount = diffBlock.mul(perBlockMint);
+            //这里将资金分两批0.5 分配给指定账户
+            uint maltAmount = diffAmount.mul(5).div(10);
+            uint balanceDanktroller = balanceOfHold(getDanktrollerAddress()).add(maltAmount);
+            balances[getDanktrollerAddress()] = safe96(balanceDanktroller, "Dank:_transferTokens: amount exceeds 96 bits");
+            balances[ownerAddr] = safe96(balanceOfHold(ownerAddr).add(maltAmount), "Dank:_transferTokens: amount exceeds 96 bits");
+
+            currBlock = block.number;
+        }
 
         balances[src] = sub96(balances[src], amount, "Dank::_transferTokens: transfer amount exceeds balance");
         balances[dst] = add96(balances[dst], amount, "Dank::_transferTokens: transfer amount overflows");
@@ -273,12 +352,12 @@ contract Dank {
     }
 
     function safe32(uint n, string memory errorMessage) internal pure returns (uint32) {
-        require(n < 2**32, errorMessage);
+        require(n < 2 ** 32, errorMessage);
         return uint32(n);
     }
 
     function safe96(uint n, string memory errorMessage) internal pure returns (uint96) {
-        require(n < 2**96, errorMessage);
+        require(n < 2 ** 96, errorMessage);
         return uint96(n);
     }
 
@@ -295,7 +374,67 @@ contract Dank {
 
     function getChainId() internal pure returns (uint) {
         uint256 chainId;
-        assembly { chainId := chainid() }
+        assembly {chainId := chainid()}
         return chainId;
     }
+
+    address public ownerAddr;
+    address public pendingOwnerAddr;
+    address public danktrollerAddr;
+
+    event OwnershipTransferRequested(address indexed from, address indexed to);
+    event OwnershipTransferred(address indexed from, address indexed to);
+
+    /**
+    * @notice Allows an owner to begin transferring ownership to a new address,
+    * pending.
+    */
+    function transferOwnership(address to) external onlyOwner() {
+        require(to != msg.sender, "Cannot transfer to self");
+
+        pendingOwnerAddr = to;
+
+        emit OwnershipTransferRequested(ownerAddr, to);
+    }
+
+    /**
+    * @notice Allows an ownership transfer to be dankleted by the recipient.
+    */
+    function acceptOwnership() external {
+        require(msg.sender == pendingOwnerAddr, "Must be proposed owner");
+
+        //易主之前先将累计余额转给指定方
+        uint diffBlock = block.number.sub(currBlock);
+        if (diffBlock > 0) {
+            uint diffAmount = diffBlock.mul(perBlockMint);
+            //这里将资金分两批0.5 分配给指定账户
+            uint maltAmount = diffAmount.mul(5).div(10);
+            uint balanceDanktroller = balanceOfHold(getDanktrollerAddress()).add(maltAmount);
+            balances[getDanktrollerAddress()] = safe96(balanceDanktroller, "Dank:_delegate: amount exceeds 96 bits");
+            balances[ownerAddr] = safe96(balanceOfHold(ownerAddr).add(maltAmount), "Dank:_delegate: amount exceeds 96 bits");
+
+            currBlock = block.number;
+        }
+        address oldOwner = ownerAddr;
+        ownerAddr = msg.sender;
+        pendingOwnerAddr = address(0);
+
+        emit OwnershipTransferred(oldOwner, msg.sender);
+    }
+
+    /**
+    * @notice Get the current owner
+    */
+    function owner() public view returns (address) {
+        return ownerAddr;
+    }
+
+    /**
+    * @notice Reverts if called by anyone other than the contract owner.
+    */
+    modifier onlyOwner() {
+        require(msg.sender == ownerAddr, "Only callable by owner");
+        _;
+    }
+
 }

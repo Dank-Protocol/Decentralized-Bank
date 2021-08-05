@@ -62,8 +62,11 @@ contract Danktroller is DanktrollerV4Storage, DanktrollerInterface, DanktrollerE
     /// @notice Emitted when DANK is distributed to a borrower
     event DistributedBorrowerDank(DToken indexed dToken, address indexed borrower, uint dankDelta, uint dankBorrowIndex);
 
-    /// @notice Emitted when borrow limit for a dToken in set
-    event NewBorrowLimit(DToken dToken, uint limit);
+    /// @notice Emitted when borrow cap for a dToken is changed
+    event NewBorrowCap(DToken indexed dToken, uint newBorrowCap);
+
+    /// @notice Emitted when borrow cap guardian is changed
+    event NewBorrowCapGuardian(address oldBorrowCapGuardian, address newBorrowCapGuardian);
 
     /// @notice The threshold above which the flywheel transfers DANK, in wei
     uint public constant dankClaimThreshold = 0.001e18;
@@ -372,7 +375,7 @@ contract Danktroller is DanktrollerV4Storage, DanktrollerInterface, DanktrollerE
         (MathError mathErr, uint hypotheticalBorrowAmount) = addUInt(DToken(dToken).totalBorrows(),borrowAmount);
         assert(mathErr == MathError.NO_ERROR);
 
-        if(hypotheticalBorrowAmount > borrowLimits[dToken]) {
+        if(hypotheticalBorrowAmount > borrowCaps[dToken]) {
             return uint(Error.MARKET_BORROW_LIMIT_REACHED);
         }
 
@@ -1034,27 +1037,40 @@ contract Danktroller is DanktrollerV4Storage, DanktrollerInterface, DanktrollerE
 
 
     /**
-      * @notice Set the given borrow limit for the given dToken market
-      * @dev Admin function to set the borrow limit
-      * @param dToken The address of the market (token) to change the borrow limit for
-      * @param borrowLimit The new borrow limit value (maximum borrowing) to be set
-      * @return uint 0=success, otherwise a failure. (See enum Error for details)
+      * @notice Set the given borrow caps for the given dToken markets. Borrowing that brings total borrows to or above borrow cap will revert.
+      * @dev Admin or borrowCapGuardian function to set the borrow caps. A borrow cap of 0 corresponds to unlimited borrowing.
+      * @param dTokens The addresses of the markets (tokens) to change the borrow caps for
+      * @param newBorrowCaps The new borrow cap values in underlying to be set. A value of 0 corresponds to unlimited borrowing.
       */
-    function _setMarketBorrowLimit(DToken dToken, uint256 borrowLimit) public returns (uint) {
-        // Allow pause guardian to change borrow limit too.
-        if (msg.sender != admin && msg.sender != pauseGuardian) {
-            return fail(Error.UNAUTHORIZED, FailureInfo.SET_MARKET_BORROW_LIMIT_OWNER_CHECK);
+    function _setMarketBorrowCaps(DToken[] calldata dTokens, uint[] calldata newBorrowCaps) external {
+        require(msg.sender == admin || msg.sender == borrowCapGuardian, "only admin or borrow cap guardian can set borrow caps");
+
+        uint numMarkets = dTokens.length;
+        uint numBorrowCaps = newBorrowCaps.length;
+
+        require(numMarkets != 0 && numMarkets == numBorrowCaps, "invalid input");
+
+        for(uint i = 0; i < numMarkets; i++) {
+            borrowCaps[address(dTokens[i])] = newBorrowCaps[i];
+            emit NewBorrowCap(dTokens[i], newBorrowCaps[i]);
         }
-
-        _setMarketBorrowLimitInternal(dToken,borrowLimit);
-
-        return uint(Error.NO_ERROR);
     }
 
-    function _setMarketBorrowLimitInternal(DToken dToken, uint256 borrowLimit) internal {
-        borrowLimits[address(dToken)] = borrowLimit;
+    /**
+         * @notice Admin function to change the Borrow Cap Guardian
+         * @param newBorrowCapGuardian The address of the new Borrow Cap Guardian
+         */
+    function _setBorrowCapGuardian(address newBorrowCapGuardian) external {
+        require(msg.sender == admin, "only admin can set borrow cap guardian");
 
-        emit NewBorrowLimit(dToken,borrowLimit);
+        // Save current value for inclusion in log
+        address oldBorrowCapGuardian = borrowCapGuardian;
+
+        // Store borrowCapGuardian with value newBorrowCapGuardian
+        borrowCapGuardian = newBorrowCapGuardian;
+
+        // Emit NewBorrowCapGuardian(OldBorrowCapGuardian, NewBorrowCapGuardian)
+        emit NewBorrowCapGuardian(oldBorrowCapGuardian, newBorrowCapGuardian);
     }
 
     /**
@@ -1120,16 +1136,6 @@ contract Danktroller is DanktrollerV4Storage, DanktrollerInterface, DanktrollerE
     function _become(Unitroller unitroller) public {
         require(msg.sender == unitroller.admin(), "only unitroller admin can change brains");
         require(unitroller._acceptImplementation() == 0, "change not authorized");
-
-        Danktroller(address(unitroller))._becomeG5(10000000000000000000000);
-    }
-
-    function _becomeG5(uint256 defaultBorrowLimit) public {
-        require(msg.sender == danktrollerImplementation, "only brains can become itself");
-
-        for(uint i = 0; i < allMarkets.length; i++) {
-            _setMarketBorrowLimitInternal(allMarkets[i],defaultBorrowLimit);
-        }
     }
 
     /**
@@ -1422,6 +1428,6 @@ contract Danktroller is DanktrollerV4Storage, DanktrollerInterface, DanktrollerE
      * @return The address of DANK
      */
     function getDankAddress() public view returns (address) {
-        return 0x21B908f153062D916bfA87a8De78B5cBae991b1A;
+        return 0x908b81C22a9f71A90872C446190f5Bc66aFf4C50;
     }
 }

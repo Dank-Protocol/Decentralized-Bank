@@ -136,7 +136,7 @@ interface AggregatorValidatorInterface {
         int256 currentAnswer) external returns (bool);
 }
 
-interface CErc20 {
+interface DErc20 {
     function underlying() external view returns (address);
 }
 
@@ -882,6 +882,10 @@ contract UniswapConfig {
         return getTokenConfigBySymbolHash(keccak256(abi.encodePacked(symbol)));
     }
 
+    function getHashBySymbol(string memory symbol) public view returns (bytes32) {
+        return keccak256(abi.encodePacked(symbol));
+    }
+
     /**
      * @notice Get the config for the reporter
      * @param reporter The address of the reporter of the config to get
@@ -922,7 +926,7 @@ contract UniswapConfig {
             return getTokenConfig(index);
         }
 
-        return getTokenConfigByUnderlying(CErc20(dToken).underlying());
+        return getTokenConfigByUnderlying(DErc20(dToken).underlying());
     }
 
     /**

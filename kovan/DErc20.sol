@@ -113,11 +113,12 @@ contract DErc20 is DToken, DErc20Interface {
      * @notice A public function to sweep accidental ERC-20 transfers to this contract. Tokens are sent to admin (timelock)
      * @param token The address of the ERC-20 token to sweep
      */
-    function sweepToken(EIP20NonStandardInterface token) external {
-        require(address(token) != underlying, "DErc20::sweepToken: can not sweep underlying token");
-        uint256 balance = token.balanceOf(address(this));
-        token.transfer(admin, balance);
-    }
+    //TODO 这个函数  正式坏境需要去掉
+//    function sweepToken(EIP20NonStandardInterface token) external {
+//        require(address(token) != underlying, "DErc20::sweepToken: can not sweep underlying token");
+//        uint256 balance = token.balanceOf(address(this));
+//        token.transfer(admin, balance);
+//    }
 
     /**
      * @notice The sender adds to reserves.
@@ -157,14 +158,14 @@ contract DErc20 is DToken, DErc20Interface {
         bool success;
         assembly {
             switch returndatasize()
-            case 0 {                       // This is a non-standard ERC-20
+            case 0 {// This is a non-standard ERC-20
                 success := not(0)          // set success to true
             }
-            case 32 {                      // This is a dankliant ERC-20
+            case 32 {// This is a dankliant ERC-20
                 returndatacopy(0, 0, 32)
                 success := mload(0)        // Set `success = returndata` of external call
             }
-            default {                      // This is an excessively non-dankliant ERC-20, revert.
+            default {// This is an excessively non-dankliant ERC-20, revert.
                 revert(0, 0)
             }
         }
@@ -173,7 +174,8 @@ contract DErc20 is DToken, DErc20Interface {
         // Calculate the amount that was *actually* transferred
         uint balanceAfter = EIP20Interface(underlying).balanceOf(address(this));
         require(balanceAfter >= balanceBefore, "TOKEN_TRANSFER_IN_OVERFLOW");
-        return balanceAfter - balanceBefore;   // underflow already checked above, just subtract
+        return balanceAfter - balanceBefore;
+        // underflow already checked above, just subtract
     }
 
     /**
@@ -192,14 +194,14 @@ contract DErc20 is DToken, DErc20Interface {
         bool success;
         assembly {
             switch returndatasize()
-            case 0 {                      // This is a non-standard ERC-20
+            case 0 {// This is a non-standard ERC-20
                 success := not(0)          // set success to true
             }
-            case 32 {                     // This is a danklaint ERC-20
+            case 32 {// This is a danklaint ERC-20
                 returndatacopy(0, 0, 32)
                 success := mload(0)        // Set `success = returndata` of external call
             }
-            default {                     // This is an excessively non-dankliant ERC-20, revert.
+            default {// This is an excessively non-dankliant ERC-20, revert.
                 revert(0, 0)
             }
         }

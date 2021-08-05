@@ -128,7 +128,19 @@ contract DanktrollerV3Storage is DanktrollerV2Storage {
     mapping(address => uint) public dankAccrued;
 }
 
+
 contract DanktrollerV4Storage is DanktrollerV3Storage {
-    // @notice max borrow limits enforced by borrowAllowed for each dToken address. Default is 0, so must be set whenever adding a new market.
-    mapping(address => uint256) public borrowLimits;
+    // @notice The borrowCapGuardian can set borrowCaps to any number for any market. Lowering the borrow cap could disable borrowing on the given market.
+    address public borrowCapGuardian;
+
+    // @notice Borrow caps enforced by borrowAllowed for each dToken address. Defaults to zero which corresponds to unlimited borrowing.
+    mapping(address => uint) public borrowCaps;
+}
+
+contract DanktrollerV5Storage is DanktrollerV4Storage {
+    /// @notice The portion of DANK that each contributor receives per block
+    mapping(address => uint) public dankContributorSpeeds;
+
+    /// @notice Last block at which a contributor's DANK rewards have been allocated
+    mapping(address => uint) public lastContributorBlock;
 }
