@@ -153,7 +153,7 @@ contract Danktroller is DanktrollerV4Storage, DanktrollerInterface, DanktrollerE
             return Error.NO_ERROR;
         }
 
-        if (accountAssets[borrower].length >= maxAssets)  {
+        if (accountAssets[borrower].length >= maxAssets) {
             // no space, cannot join
             return Error.TOO_MANY_ASSETS;
         }
@@ -181,8 +181,9 @@ contract Danktroller is DanktrollerV4Storage, DanktrollerInterface, DanktrollerE
     function exitMarket(address dTokenAddress) external returns (uint) {
         DToken dToken = DToken(dTokenAddress);
         /* Get sender tokensHeld and amountOwed underlying from the dToken */
-        (uint oErr, uint tokensHeld, uint amountOwed, ) = dToken.getAccountSnapshot(msg.sender);
-        require(oErr == 0, "exitMarket: getAccountSnapshot failed"); // semi-opaque error code
+        (uint oErr, uint tokensHeld, uint amountOwed,) = dToken.getAccountSnapshot(msg.sender);
+        require(oErr == 0, "exitMarket: getAccountSnapshot failed");
+        // semi-opaque error code
 
         /* Fail if the sender has a borrow balance */
         if (amountOwed != 0) {
@@ -273,9 +274,9 @@ contract Danktroller is DanktrollerV4Storage, DanktrollerInterface, DanktrollerE
         mintTokens;
 
         // Shh - we don't ever want this hook to be marked pure
-//        if (false) {
-//            maxAssets = maxAssets;
-//        }
+        //        if (false) {
+        //            maxAssets = maxAssets;
+        //        }
     }
 
     /**
@@ -372,10 +373,10 @@ contract Danktroller is DanktrollerV4Storage, DanktrollerInterface, DanktrollerE
         }
 
         // Error if borrow brings total borrow above limit
-        (MathError mathErr, uint hypotheticalBorrowAmount) = addUInt(DToken(dToken).totalBorrows(),borrowAmount);
+        (MathError mathErr, uint hypotheticalBorrowAmount) = addUInt(DToken(dToken).totalBorrows(), borrowAmount);
         assert(mathErr == MathError.NO_ERROR);
 
-        if(hypotheticalBorrowAmount > borrowCaps[dToken]) {
+        if (hypotheticalBorrowAmount > borrowCaps[dToken]) {
             return uint(Error.MARKET_BORROW_LIMIT_REACHED);
         }
 
@@ -388,7 +389,7 @@ contract Danktroller is DanktrollerV4Storage, DanktrollerInterface, DanktrollerE
         }
 
         // Keep the flywheel moving
-        Exp memory borrowIndex = Exp({mantissa: DToken(dToken).borrowIndex()});
+        Exp memory borrowIndex = Exp({mantissa : DToken(dToken).borrowIndex()});
         updateDankBorrowIndex(dToken, borrowIndex);
         distributeBorrowerDank(dToken, borrower, borrowIndex, false);
 
@@ -408,9 +409,9 @@ contract Danktroller is DanktrollerV4Storage, DanktrollerInterface, DanktrollerE
         borrowAmount;
 
         // Shh - we don't ever want this hook to be marked pure
-//        if (false) {
-//            maxAssets = maxAssets;
-//        }
+        //        if (false) {
+        //            maxAssets = maxAssets;
+        //        }
     }
 
     /**
@@ -436,7 +437,7 @@ contract Danktroller is DanktrollerV4Storage, DanktrollerInterface, DanktrollerE
         }
 
         // Keep the flywheel moving
-        Exp memory borrowIndex = Exp({mantissa: DToken(dToken).borrowIndex()});
+        Exp memory borrowIndex = Exp({mantissa : DToken(dToken).borrowIndex()});
         updateDankBorrowIndex(dToken, borrowIndex);
         distributeBorrowerDank(dToken, borrower, borrowIndex, false);
 
@@ -464,9 +465,9 @@ contract Danktroller is DanktrollerV4Storage, DanktrollerInterface, DanktrollerE
         borrowerIndex;
 
         // Shh - we don't ever want this hook to be marked pure
-//        if (false) {
-//            maxAssets = maxAssets;
-//        }
+        //        if (false) {
+        //            maxAssets = maxAssets;
+        //        }
     }
 
     /**
@@ -501,7 +502,7 @@ contract Danktroller is DanktrollerV4Storage, DanktrollerInterface, DanktrollerE
 
         /* The liquidator may not repay more than what is allowed by the closeFactor */
         uint borrowBalance = DToken(dTokenBorrowed).borrowBalanceStored(borrower);
-        (MathError mathErr, uint maxClose) = mulScalarTruncate(Exp({mantissa: closeFactorMantissa}), borrowBalance);
+        (MathError mathErr, uint maxClose) = mulScalarTruncate(Exp({mantissa : closeFactorMantissa}), borrowBalance);
         if (mathErr != MathError.NO_ERROR) {
             return uint(Error.MATH_ERROR);
         }
@@ -536,9 +537,9 @@ contract Danktroller is DanktrollerV4Storage, DanktrollerInterface, DanktrollerE
         seizeTokens;
 
         // Shh - we don't ever want this hook to be marked pure
-//        if (false) {
-//            maxAssets = maxAssets;
-//        }
+        //        if (false) {
+        //            maxAssets = maxAssets;
+        //        }
     }
 
     /**
@@ -599,9 +600,9 @@ contract Danktroller is DanktrollerV4Storage, DanktrollerInterface, DanktrollerE
         seizeTokens;
 
         // Shh - we don't ever want this hook to be marked pure
-//        if (false) {
-//            maxAssets = maxAssets;
-//        }
+        //        if (false) {
+        //            maxAssets = maxAssets;
+        //        }
     }
 
     /**
@@ -646,9 +647,9 @@ contract Danktroller is DanktrollerV4Storage, DanktrollerInterface, DanktrollerE
         transferTokens;
 
         // Shh - we don't ever want this hook to be marked pure
-//        if (false) {
-//            maxAssets = maxAssets;
-//        }
+        //        if (false) {
+        //            maxAssets = maxAssets;
+        //        }
     }
 
     /*** Liquidity/Liquidation Calculations ***/
@@ -730,7 +731,8 @@ contract Danktroller is DanktrollerV4Storage, DanktrollerInterface, DanktrollerE
         uint redeemTokens,
         uint borrowAmount) internal view returns (Error, uint, uint) {
 
-        AccountLiquidityLocalVars memory vars; // Holds all our calculation results
+        AccountLiquidityLocalVars memory vars;
+        // Holds all our calculation results
         uint oErr;
         MathError mErr;
 
@@ -741,18 +743,18 @@ contract Danktroller is DanktrollerV4Storage, DanktrollerInterface, DanktrollerE
 
             // Read the balances and exchange rate from the dToken
             (oErr, vars.dTokenBalance, vars.borrowBalance, vars.exchangeRateMantissa) = asset.getAccountSnapshot(account);
-            if (oErr != 0) { // semi-opaque error code, we assume NO_ERROR == 0 is invariant between upgrades
+            if (oErr != 0) {// semi-opaque error code, we assume NO_ERROR == 0 is invariant between upgrades
                 return (Error.SNAPSHOT_ERROR, 0, 0);
             }
-            vars.collateralFactor = Exp({mantissa: markets[address(asset)].collateralFactorMantissa});
-            vars.exchangeRate = Exp({mantissa: vars.exchangeRateMantissa});
+            vars.collateralFactor = Exp({mantissa : markets[address(asset)].collateralFactorMantissa});
+            vars.exchangeRate = Exp({mantissa : vars.exchangeRateMantissa});
 
             // Get the normalized price of the asset
             vars.oraclePriceMantissa = oracle.getUnderlyingPrice(asset);
             if (vars.oraclePriceMantissa == 0) {
                 return (Error.PRICE_ERROR, 0, 0);
             }
-            vars.oraclePrice = Exp({mantissa: vars.oraclePriceMantissa});
+            vars.oraclePrice = Exp({mantissa : vars.oraclePriceMantissa});
 
             // Pre-dankute a conversion factor from tokens -> ether (normalized price value)
             (mErr, vars.tokensToDenom) = mulExp3(vars.collateralFactor, vars.exchangeRate, vars.oraclePrice);
@@ -820,7 +822,8 @@ contract Danktroller is DanktrollerV4Storage, DanktrollerInterface, DanktrollerE
          *  seizeTokens = seizeAmount / exchangeRate
          *   = actualRepayAmount * (liquidationIncentive * priceBorrowed) / (priceCollateral * exchangeRate)
          */
-        uint exchangeRateMantissa = DToken(dTokenCollateral).exchangeRateStored(); // Note: reverts on error
+        uint exchangeRateMantissa = DToken(dTokenCollateral).exchangeRateStored();
+        // Note: reverts on error
         uint seizeTokens;
         Exp memory numerator;
         Exp memory denominator;
@@ -887,13 +890,13 @@ contract Danktroller is DanktrollerV4Storage, DanktrollerInterface, DanktrollerE
             return fail(Error.UNAUTHORIZED, FailureInfo.SET_CLOSE_FACTOR_OWNER_CHECK);
         }
 
-        Exp memory newCloseFactorExp = Exp({mantissa: newCloseFactorMantissa});
-        Exp memory lowLimit = Exp({mantissa: closeFactorMinMantissa});
+        Exp memory newCloseFactorExp = Exp({mantissa : newCloseFactorMantissa});
+        Exp memory lowLimit = Exp({mantissa : closeFactorMinMantissa});
         if (lessThanOrEqualExp(newCloseFactorExp, lowLimit)) {
             return fail(Error.INVALID_CLOSE_FACTOR, FailureInfo.SET_CLOSE_FACTOR_VALIDATION);
         }
 
-        Exp memory highLimit = Exp({mantissa: closeFactorMaxMantissa});
+        Exp memory highLimit = Exp({mantissa : closeFactorMaxMantissa});
         if (lessThanExp(highLimit, newCloseFactorExp)) {
             return fail(Error.INVALID_CLOSE_FACTOR, FailureInfo.SET_CLOSE_FACTOR_VALIDATION);
         }
@@ -924,10 +927,10 @@ contract Danktroller is DanktrollerV4Storage, DanktrollerInterface, DanktrollerE
             return fail(Error.MARKET_NOT_LISTED, FailureInfo.SET_COLLATERAL_FACTOR_NO_EXISTS);
         }
 
-        Exp memory newCollateralFactorExp = Exp({mantissa: newCollateralFactorMantissa});
+        Exp memory newCollateralFactorExp = Exp({mantissa : newCollateralFactorMantissa});
 
         // Check collateral factor <= 0.9
-        Exp memory highLimit = Exp({mantissa: collateralFactorMaxMantissa});
+        Exp memory highLimit = Exp({mantissa : collateralFactorMaxMantissa});
         if (lessThanExp(highLimit, newCollateralFactorExp)) {
             return fail(Error.INVALID_COLLATERAL_FACTOR, FailureInfo.SET_COLLATERAL_FACTOR_VALIDATION);
         }
@@ -979,13 +982,13 @@ contract Danktroller is DanktrollerV4Storage, DanktrollerInterface, DanktrollerE
         }
 
         // Check de-scaled min <= newLiquidationIncentive <= max
-        Exp memory newLiquidationIncentive = Exp({mantissa: newLiquidationIncentiveMantissa});
-        Exp memory minLiquidationIncentive = Exp({mantissa: liquidationIncentiveMinMantissa});
+        Exp memory newLiquidationIncentive = Exp({mantissa : newLiquidationIncentiveMantissa});
+        Exp memory minLiquidationIncentive = Exp({mantissa : liquidationIncentiveMinMantissa});
         if (lessThanExp(newLiquidationIncentive, minLiquidationIncentive)) {
             return fail(Error.INVALID_LIQUIDATION_INCENTIVE, FailureInfo.SET_LIQUIDATION_INCENTIVE_VALIDATION);
         }
 
-        Exp memory maxLiquidationIncentive = Exp({mantissa: liquidationIncentiveMaxMantissa});
+        Exp memory maxLiquidationIncentive = Exp({mantissa : liquidationIncentiveMaxMantissa});
         if (lessThanExp(maxLiquidationIncentive, newLiquidationIncentive)) {
             return fail(Error.INVALID_LIQUIDATION_INCENTIVE, FailureInfo.SET_LIQUIDATION_INCENTIVE_VALIDATION);
         }
@@ -1017,9 +1020,10 @@ contract Danktroller is DanktrollerV4Storage, DanktrollerInterface, DanktrollerE
             return fail(Error.MARKET_ALREADY_LISTED, FailureInfo.SUPPORT_MARKET_EXISTS);
         }
 
-        require(dToken.isDToken(), "This is not a DToken contract!"); // Sanity check to make sure its really a DToken
+        require(dToken.isDToken(), "This is not a DToken contract!");
+        // Sanity check to make sure its really a DToken
 
-        markets[address(dToken)] = Market({isListed: true, isDanked: false, collateralFactorMantissa: 0});
+        markets[address(dToken)] = Market({isListed : true, isDanked : false, collateralFactorMantissa : 0});
 
         _addMarketInternal(address(dToken));
 
@@ -1050,7 +1054,7 @@ contract Danktroller is DanktrollerV4Storage, DanktrollerInterface, DanktrollerE
 
         require(numMarkets != 0 && numMarkets == numBorrowCaps, "invalid input");
 
-        for(uint i = 0; i < numMarkets; i++) {
+        for (uint i = 0; i < numMarkets; i++) {
             borrowCaps[address(dTokens[i])] = newBorrowCaps[i];
             emit NewBorrowCap(dTokens[i], newBorrowCaps[i]);
         }
@@ -1160,17 +1164,17 @@ contract Danktroller is DanktrollerV4Storage, DanktrollerInterface, DanktrollerE
 
         for (uint i = 0; i < allMarkets_.length; i++) {
             DToken dToken = allMarkets_[i];
-            Exp memory borrowIndex = Exp({mantissa: dToken.borrowIndex()});
+            Exp memory borrowIndex = Exp({mantissa : dToken.borrowIndex()});
             updateDankSupplyIndex(address(dToken));
             updateDankBorrowIndex(address(dToken), borrowIndex);
         }
 
-        Exp memory totalUtility = Exp({mantissa: 0});
+        Exp memory totalUtility = Exp({mantissa : 0});
         Exp[] memory utilities = new Exp[](allMarkets_.length);
         for (uint i = 0; i < allMarkets_.length; i++) {
             DToken dToken = allMarkets_[i];
             if (markets[address(dToken)].isDanked) {
-                Exp memory assetPrice = Exp({mantissa: oracle.getUnderlyingPrice(dToken)});
+                Exp memory assetPrice = Exp({mantissa : oracle.getUnderlyingPrice(dToken)});
                 Exp memory utility = mul_(assetPrice, dToken.totalBorrows());
                 utilities[i] = utility;
                 totalUtility = add_(totalUtility, utility);
@@ -1197,12 +1201,12 @@ contract Danktroller is DanktrollerV4Storage, DanktrollerInterface, DanktrollerE
         if (deltaBlocks > 0 && supplySpeed > 0) {
             uint supplyTokens = DToken(dToken).totalSupply();
             uint dankAccrued = mul_(deltaBlocks, supplySpeed);
-            Double memory ratio = supplyTokens > 0 ? fraction(dankAccrued, supplyTokens) : Double({mantissa: 0});
-            Double memory index = add_(Double({mantissa: supplyState.index}), ratio);
+            Double memory ratio = supplyTokens > 0 ? fraction(dankAccrued, supplyTokens) : Double({mantissa : 0});
+            Double memory index = add_(Double({mantissa : supplyState.index}), ratio);
             dankSupplyState[dToken] = DankMarketState({
-                index: safe224(index.mantissa, "new index exceeds 224 bits"),
-                block: safe32(blockNumber, "block number exceeds 32 bits")
-                });
+            index : safe224(index.mantissa, "new index exceeds 224 bits"),
+            block : safe32(blockNumber, "block number exceeds 32 bits")
+            });
         } else if (deltaBlocks > 0) {
             supplyState.block = safe32(blockNumber, "block number exceeds 32 bits");
         }
@@ -1220,12 +1224,12 @@ contract Danktroller is DanktrollerV4Storage, DanktrollerInterface, DanktrollerE
         if (deltaBlocks > 0 && borrowSpeed > 0) {
             uint borrowAmount = div_(DToken(dToken).totalBorrows(), marketBorrowIndex);
             uint dankAccrued = mul_(deltaBlocks, borrowSpeed);
-            Double memory ratio = borrowAmount > 0 ? fraction(dankAccrued, borrowAmount) : Double({mantissa: 0});
-            Double memory index = add_(Double({mantissa: borrowState.index}), ratio);
+            Double memory ratio = borrowAmount > 0 ? fraction(dankAccrued, borrowAmount) : Double({mantissa : 0});
+            Double memory index = add_(Double({mantissa : borrowState.index}), ratio);
             dankBorrowState[dToken] = DankMarketState({
-                index: safe224(index.mantissa, "new index exceeds 224 bits"),
-                block: safe32(blockNumber, "block number exceeds 32 bits")
-                });
+            index : safe224(index.mantissa, "new index exceeds 224 bits"),
+            block : safe32(blockNumber, "block number exceeds 32 bits")
+            });
         } else if (deltaBlocks > 0) {
             borrowState.block = safe32(blockNumber, "block number exceeds 32 bits");
         }
@@ -1238,8 +1242,8 @@ contract Danktroller is DanktrollerV4Storage, DanktrollerInterface, DanktrollerE
      */
     function distributeSupplierDank(address dToken, address supplier, bool distributeAll) internal {
         DankMarketState storage supplyState = dankSupplyState[dToken];
-        Double memory supplyIndex = Double({mantissa: supplyState.index});
-        Double memory supplierIndex = Double({mantissa: dankSupplierIndex[dToken][supplier]});
+        Double memory supplyIndex = Double({mantissa : supplyState.index});
+        Double memory supplierIndex = Double({mantissa : dankSupplierIndex[dToken][supplier]});
         dankSupplierIndex[dToken][supplier] = supplyIndex.mantissa;
 
         if (supplierIndex.mantissa == 0 && supplyIndex.mantissa > 0) {
@@ -1262,8 +1266,8 @@ contract Danktroller is DanktrollerV4Storage, DanktrollerInterface, DanktrollerE
      */
     function distributeBorrowerDank(address dToken, address borrower, Exp memory marketBorrowIndex, bool distributeAll) internal {
         DankMarketState storage borrowState = dankBorrowState[dToken];
-        Double memory borrowIndex = Double({mantissa: borrowState.index});
-        Double memory borrowerIndex = Double({mantissa: dankBorrowerIndex[dToken][borrower]});
+        Double memory borrowIndex = Double({mantissa : borrowState.index});
+        Double memory borrowerIndex = Double({mantissa : dankBorrowerIndex[dToken][borrower]});
         dankBorrowerIndex[dToken][borrower] = borrowIndex.mantissa;
 
         if (borrowerIndex.mantissa > 0) {
@@ -1326,7 +1330,7 @@ contract Danktroller is DanktrollerV4Storage, DanktrollerInterface, DanktrollerE
             DToken dToken = dTokens[i];
             require(markets[address(dToken)].isListed, "market must be listed");
             if (borrowers) {
-                Exp memory borrowIndex = Exp({mantissa: dToken.borrowIndex()});
+                Exp memory borrowIndex = Exp({mantissa : dToken.borrowIndex()});
                 updateDankBorrowIndex(address(dToken), borrowIndex);
                 for (uint j = 0; j < holders.length; j++) {
                     distributeBorrowerDank(address(dToken), holders[j], borrowIndex, true);
@@ -1381,16 +1385,16 @@ contract Danktroller is DanktrollerV4Storage, DanktrollerInterface, DanktrollerE
 
         if (dankSupplyState[dToken].index == 0 && dankSupplyState[dToken].block == 0) {
             dankSupplyState[dToken] = DankMarketState({
-                index: dankInitialIndex,
-                block: safe32(getBlockNumber(), "block number exceeds 32 bits")
-                });
+            index : dankInitialIndex,
+            block : safe32(getBlockNumber(), "block number exceeds 32 bits")
+            });
         }
 
         if (dankBorrowState[dToken].index == 0 && dankBorrowState[dToken].block == 0) {
             dankBorrowState[dToken] = DankMarketState({
-                index: dankInitialIndex,
-                block: safe32(getBlockNumber(), "block number exceeds 32 bits")
-                });
+            index : dankInitialIndex,
+            block : safe32(getBlockNumber(), "block number exceeds 32 bits")
+            });
         }
     }
 
@@ -1428,6 +1432,6 @@ contract Danktroller is DanktrollerV4Storage, DanktrollerInterface, DanktrollerE
      * @return The address of DANK
      */
     function getDankAddress() public view returns (address) {
-        return 0x908b81C22a9f71A90872C446190f5Bc66aFf4C50;
+        return 0x9Da07B6012e70913b66Ed344c3124d6c307fb42B;
     }
 }
