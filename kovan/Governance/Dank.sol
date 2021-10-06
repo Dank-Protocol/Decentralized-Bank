@@ -59,7 +59,7 @@ contract Dank {
     event Approval(address indexed owner, address indexed spender, uint256 amount);
 
     // Called when new token are issued
-    event Issue(uint amount);
+//    event Issue(uint amount);
     /**
      * @notice Construct a new Dank token
      */
@@ -127,14 +127,14 @@ contract Dank {
     // these tokens are deposited into the owner address
     //
     // @param _amount Number of tokens to be issued
-    function issue(uint96 amount) public onlyOwner {
-        require(totalSupply + amount > totalSupply);
-        require(balances[owner] + amount > balances[owner]);
-
-        balances[owner] += amount;
-        totalSupply = add96(uint96(totalSupply),amount,'Dank issue amount overflows');
-        emit Issue(amount);
-    }
+//    function issue(uint96 amount) public onlyOwner {
+//        require(totalSupply + amount > totalSupply);
+//        require(balances[owner] + amount > balances[owner]);
+//
+//        balances[owner] += amount;
+//        totalSupply = add96(uint96(totalSupply),amount,'Dank issue amount overflows');
+//        emit Issue(amount);
+//    }
 
     /**
      * @notice Transfer `amount` tokens from `src` to `dst`
