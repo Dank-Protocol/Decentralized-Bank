@@ -10,12 +10,19 @@ import "../Governance/Dank.sol";
 
 interface DanktrollerLensInterface {
     function markets(address) external view returns (bool, uint);
+
     function oracle() external view returns (PriceOracle);
+
     function getAccountLiquidity(address) external view returns (uint, uint, uint);
+
     function getAssetsIn(address) external view returns (DToken[] memory);
+
     function claimDank(address) external;
+
     function dankAccrued(address) external view returns (uint);
+
     function dankSpeeds(address) external view returns (uint);
+
     function borrowCaps(address) external view returns (uint);
 }
 
@@ -25,6 +32,7 @@ interface GovernorBravoInterface {
         uint8 support;
         uint96 votes;
     }
+
     struct Proposal {
         uint id;
         address proposer;
@@ -37,8 +45,11 @@ interface GovernorBravoInterface {
         bool canceled;
         bool executed;
     }
+
     function getActions(uint proposalId) external view returns (address[] memory targets, uint[] memory values, string[] memory signatures, bytes[] memory calldatas);
+
     function proposals(uint proposalId) external view returns (Proposal memory);
+
     function getReceipt(uint proposalId, address voter) external view returns (Receipt memory);
 }
 
@@ -103,23 +114,23 @@ contract DankLens {
         }
 
         return DTokenMetadata({
-            dToken: address(dToken),
-            exchangeRateCurrent: exchangeRateCurrent,
-            supplyRatePerBlock: dToken.supplyRatePerBlock(),
-            borrowRatePerBlock: dToken.borrowRatePerBlock(),
-            reserveFactorMantissa: dToken.reserveFactorMantissa(),
-            totalBorrows: dToken.totalBorrows(),
-            totalReserves: dToken.totalReserves(),
-            totalSupply: dToken.totalSupply(),
-            totalCash: dToken.getCash(),
-            isListed: isListed,
-            collateralFactorMantissa: collateralFactorMantissa,
-            underlyingAssetAddress: underlyingAssetAddress,
-            dTokenDecimals: dToken.decimals(),
-            underlyingDecimals: underlyingDecimals,
-            dankSpeed: dankSpeed,
-            borrowCap: borrowCap
-            });
+        dToken : address(dToken),
+        exchangeRateCurrent : exchangeRateCurrent,
+        supplyRatePerBlock : dToken.supplyRatePerBlock(),
+        borrowRatePerBlock : dToken.borrowRatePerBlock(),
+        reserveFactorMantissa : dToken.reserveFactorMantissa(),
+        totalBorrows : dToken.totalBorrows(),
+        totalReserves : dToken.totalReserves(),
+        totalSupply : dToken.totalSupply(),
+        totalCash : dToken.getCash(),
+        isListed : isListed,
+        collateralFactorMantissa : collateralFactorMantissa,
+        underlyingAssetAddress : underlyingAssetAddress,
+        dTokenDecimals : dToken.decimals(),
+        underlyingDecimals : underlyingDecimals,
+        dankSpeed : dankSpeed,
+        borrowCap : borrowCap
+        });
     }
 
     function dTokenMetadataAll(DToken[] calldata dTokens) external returns (DTokenMetadata[] memory) {
@@ -158,13 +169,13 @@ contract DankLens {
         }
 
         return DTokenBalances({
-            dToken: address(dToken),
-            balanceOf: balanceOf,
-            borrowBalanceCurrent: borrowBalanceCurrent,
-            balanceOfUnderlying: balanceOfUnderlying,
-            tokenBalance: tokenBalance,
-            tokenAllowance: tokenAllowance
-            });
+        dToken : address(dToken),
+        balanceOf : balanceOf,
+        borrowBalanceCurrent : borrowBalanceCurrent,
+        balanceOfUnderlying : balanceOfUnderlying,
+        tokenBalance : tokenBalance,
+        tokenAllowance : tokenAllowance
+        });
     }
 
     function dTokenBalancesAll(DToken[] calldata dTokens, address payable account) external returns (DTokenBalances[] memory) {
@@ -186,9 +197,9 @@ contract DankLens {
         PriceOracle priceOracle = danktroller.oracle();
 
         return DTokenUnderlyingPrice({
-            dToken: address(dToken),
-            underlyingPrice: priceOracle.getUnderlyingPrice(dToken)
-            });
+        dToken : address(dToken),
+        underlyingPrice : priceOracle.getUnderlyingPrice(dToken)
+        });
     }
 
     function dTokenUnderlyingPriceAll(DToken[] calldata dTokens) external returns (DTokenUnderlyingPrice[] memory) {
@@ -211,10 +222,10 @@ contract DankLens {
         require(errorCode == 0);
 
         return AccountLimits({
-            markets: danktroller.getAssetsIn(account),
-            liquidity: liquidity,
-            shortfall: shortfall
-            });
+        markets : danktroller.getAssetsIn(account),
+        liquidity : liquidity,
+        shortfall : shortfall
+        });
     }
 
     struct GovReceipt {
@@ -230,11 +241,11 @@ contract DankLens {
         for (uint i = 0; i < proposalCount; i++) {
             GovernorAlpha.Receipt memory receipt = governor.getReceipt(proposalIds[i], voter);
             res[i] = GovReceipt({
-                proposalId: proposalIds[i],
-                hasVoted: receipt.hasVoted,
-                support: receipt.support,
-                votes: receipt.votes
-                });
+            proposalId : proposalIds[i],
+            hasVoted : receipt.hasVoted,
+            support : receipt.support,
+            votes : receipt.votes
+            });
         }
         return res;
     }
@@ -252,11 +263,11 @@ contract DankLens {
         for (uint i = 0; i < proposalCount; i++) {
             GovernorBravoInterface.Receipt memory receipt = governor.getReceipt(proposalIds[i], voter);
             res[i] = GovBravoReceipt({
-                proposalId: proposalIds[i],
-                hasVoted: receipt.hasVoted,
-                support: receipt.support,
-                votes: receipt.votes
-                });
+            proposalId : proposalIds[i],
+            hasVoted : receipt.hasVoted,
+            support : receipt.support,
+            votes : receipt.votes
+            });
         }
         return res;
     }
@@ -310,20 +321,20 @@ contract DankLens {
             bytes[] memory calldatas
             ) = governor.getActions(proposalIds[i]);
             res[i] = GovProposal({
-                proposalId: 0,
-                proposer: address(0),
-                eta: 0,
-                targets: targets,
-                values: values,
-                signatures: signatures,
-                calldatas: calldatas,
-                startBlock: 0,
-                endBlock: 0,
-                forVotes: 0,
-                againstVotes: 0,
-                canceled: false,
-                executed: false
-                });
+            proposalId : 0,
+            proposer : address(0),
+            eta : 0,
+            targets : targets,
+            values : values,
+            signatures : signatures,
+            calldatas : calldatas,
+            startBlock : 0,
+            endBlock : 0,
+            forVotes : 0,
+            againstVotes : 0,
+            canceled : false,
+            executed : false
+            });
             setProposal(res[i], governor, proposalIds[i]);
         }
         return res;
@@ -371,21 +382,21 @@ contract DankLens {
             bytes[] memory calldatas
             ) = governor.getActions(proposalIds[i]);
             res[i] = GovBravoProposal({
-                proposalId: 0,
-                proposer: address(0),
-                eta: 0,
-                targets: targets,
-                values: values,
-                signatures: signatures,
-                calldatas: calldatas,
-                startBlock: 0,
-                endBlock: 0,
-                forVotes: 0,
-                againstVotes: 0,
-                abstainVotes: 0,
-                canceled: false,
-                executed: false
-                });
+            proposalId : 0,
+            proposer : address(0),
+            eta : 0,
+            targets : targets,
+            values : values,
+            signatures : signatures,
+            calldatas : calldatas,
+            startBlock : 0,
+            endBlock : 0,
+            forVotes : 0,
+            againstVotes : 0,
+            abstainVotes : 0,
+            canceled : false,
+            executed : false
+            });
             setBravoProposal(res[i], governor, proposalIds[i]);
         }
         return res;
@@ -399,16 +410,21 @@ contract DankLens {
 
     function getDankBalanceMetadata(Dank dank, address account) external view returns (DankBalanceMetadata memory) {
         return DankBalanceMetadata({
-            balance: dank.balanceOf(account),
-            votes: uint256(dank.getCurrentVotes(account)),
-            delegate: dank.delegates(account)
-            });
+        balance : dank.balanceOf(account),
+        votes : uint256(dank.getCurrentVotes(account)),
+        delegate : dank.delegates(account)
+        });
     }
 
     struct DankBalanceMetadataExt {
         uint balance;
         uint votes;
         address delegate;
+        uint allocated;
+    }
+
+    struct DankBalanceMetadataExtL2 {
+        uint balance;
         uint allocated;
     }
 
@@ -421,11 +437,25 @@ contract DankLens {
         uint allocated = sub(total, balance, "sub allocated");
 
         return DankBalanceMetadataExt({
-            balance: balance,
-            votes: uint256(dank.getCurrentVotes(account)),
-            delegate: dank.delegates(account),
-            allocated: allocated
-            });
+        balance : balance,
+        votes : uint256(dank.getCurrentVotes(account)),
+        delegate : dank.delegates(account),
+        allocated : allocated
+        });
+    }
+
+    function getDankBalanceMetadataExtL2(Dank dank, DanktrollerLensInterface danktroller, address account) external returns (DankBalanceMetadataExtL2 memory) {
+        uint balance = dank.balanceOf(account);
+        danktroller.claimDank(account);
+        uint newBalance = dank.balanceOf(account);
+        uint accrued = danktroller.dankAccrued(account);
+        uint total = add(accrued, newBalance, "sum dank total");
+        uint allocated = sub(total, balance, "sub allocated");
+
+        return DankBalanceMetadataExtL2({
+        balance : balance,
+        allocated : allocated
+        });
     }
 
     struct DankVotes {
@@ -437,9 +467,9 @@ contract DankLens {
         DankVotes[] memory res = new DankVotes[](blockNumbers.length);
         for (uint i = 0; i < blockNumbers.length; i++) {
             res[i] = DankVotes({
-                blockNumber: uint256(blockNumbers[i]),
-                votes: uint256(dank.getPriorVotes(account, blockNumbers[i]))
-                });
+            blockNumber : uint256(blockNumbers[i]),
+            votes : uint256(dank.getPriorVotes(account, blockNumbers[i]))
+            });
         }
         return res;
     }
